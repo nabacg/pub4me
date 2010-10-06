@@ -1,0 +1,94 @@
+/* reset.css */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+
+/* remember to define focus styles! */:focus {
+    outline: 0;
+}
+
+body {
+    line-height: 1;
+    color: black;
+    background: white;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+/* end of reset.css */
+body {
+}
+
+h1 {
+    font-size: 28pt;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 0.4em;
+}
+
+#content {
+    width: 700px;
+    margin: auto;
+}
+
+#place {
+    margin-top: 120px;
+    font-size: 1.2em;
+}
+
+form div {
+    margin-top: 10px;
+}
+
+input {
+    line-height: 1.5;
+    padding: 0.2em 0.4em;
+    font-size: inherit;
+}
+
+input.placename {
+    display: block;
+    padding: 0.2em 0.4em;
+    margin-right: 10px;
+    width: 350px;
+}
+
+#place .place_result {
+    font-size: 1.2em;
+    color: blue;
+}
+
+#second_place {
+    display: none;
+}
+
+#second_place_name {
+    display: none;
+}
+
+#result {
+    padding: 20px;
+    font-size: 1.2em;
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid blue;
+}
+
+#result_place {
+    font-size: 200%;
+    font-weight: bold;
+}
