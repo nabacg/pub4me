@@ -1,3 +1,7 @@
 Pierwszy zajebisty plik dodany z korna na rootnode! :)
 ... i zmodyfikowany na gutkowymlaptoku
+<<<<<<< HEAD:plik_dodany_z_korna.txt
 zmodyfikowany w ramach nowego brancha
+=======
+pomylka, dopiero ta modyfikacja jest na branchu...
+>>>>>>> 13c40dab847e64b8502bc3f0d0505f72943ef319:plik_dodany_z_korna.txt
