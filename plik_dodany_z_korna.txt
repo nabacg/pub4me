@@ -1,3 +1,4 @@
 Pierwszy zajebisty plik dodany z korna na rootnode! :)
 ... i zmodyfikowany na gutkowymlaptoku
-pomylka, dopiero ta modyfikacja jest na branchu...
+ostateczna linijka po mergowaniu.
+
