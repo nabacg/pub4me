@@ -1,2 +1,3 @@
-to jest pierwszy zajebisty plik tekstowy w projekcie
+Zmiana wykonana na kornie!!!
+Git jest fajny :)
 GIT MIA¯D¯Y! :)
