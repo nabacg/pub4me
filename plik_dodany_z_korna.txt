@@ -1,2 +1,3 @@
 Pierwszy zajebisty plik dodany z korna na rootnode! :)
 ... i zmodyfikowany na gutkowymlaptoku
+zmodyfikowany w ramach nowego brancha
