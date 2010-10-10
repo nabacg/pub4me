@@ -1,7 +1,7 @@
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
-from django.core import serializers
+#from django.core import serializers
 from django.utils import simplejson
 from PubsProject.pub4me.models import Pub
 
@@ -26,5 +26,5 @@ def pub_autocomplete(request):
             return HttpResponse(json_data,'application/javascript')
 
 
-    return render_to_response('pub4me/pub_autocomplete_json.html', {'term': 'chuja-zle wywoalenie'}, context_instance=RequestContext(request))    
+    return render_to_response('pub4me/pub_autocomplete_json.html', {'term': 'chuja-zle wywoalenie'}, context_instance=RequestContext(request))
     
