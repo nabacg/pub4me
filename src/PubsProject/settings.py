@@ -3,7 +3,17 @@ import os
 
 ROOT = lambda base : os.path.join(os.path.dirname(__file__), base).replace('\\','/')
 
-DEBUG = False
+''' 
+Zeby uruchomic aplikacje lokalnie nalezy:
+1. Ustawic DEBUG = True
+2. Zakomentowac namiar na odpowiednia baze
+
+Zeby uruchomic aplikacje na serwerze nalezy:
+1. Ustawic DEBUG = False
+2. Zakomentowac namiar na odpowiednia baze
+'''
+
+DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -12,7 +22,7 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -34,7 +44,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-'''
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
