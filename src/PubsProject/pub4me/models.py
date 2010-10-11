@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
  
 class City(models.Model):
     id = models.CharField(max_length=50, primary_key=True)
@@ -11,11 +12,11 @@ class Pub(models.Model):
     city = models.ForeignKey(City)
     ext_service_id_kk = models.BigIntegerField() # ID knajpy z serwisu zewnetrzego (knajpy.krakow.pl)
 
-class User(models.Model):
-    email = models.EmailField(max_length=100)
+class PubUser(User):
+#    email = models.EmailField(max_length=100)
     registered = models.BooleanField(default=False)
-    time_registered = models.TimeField()
-    time_setup = models.TimeField()
+#    time_registered = models.TimeField()
+ #   time_setup = models.TimeField()
     pubs = models.ManyToManyField(Pub)
        
 class UserAction(models.Model): 
@@ -23,7 +24,7 @@ class UserAction(models.Model):
         (u'LP', u'User liked a pub'),
         (u'GS', u'User got a suggestion'),
     )
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(PubUser)
     ip = models.IPAddressField()
     time = models.TimeField()
     browser_info = models.CharField(max_length=500)

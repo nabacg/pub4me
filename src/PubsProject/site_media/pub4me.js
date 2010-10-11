@@ -2,10 +2,10 @@ $(document).ready(function(){
     $("input#first_place_name").autocomplete({
         source: "pub_autocomplete",
 		minLength: 2,
-
         select: function(event, ui){
             $("#first_place").replaceWith('<p class="place_result">Lubisz: ' + ui.item.value + '</p>');
             $("#second_place").show(500);
+
             $("input#second_place_name").autocomplete({
                 source: "pub_autocomplete",
 				minLength: 2,
