@@ -1,0 +1,41 @@
+{% extends "pub4me/index.html" %}
+
+{% block main_content %}
+
+    {% if sign_up_form %}
+        {% if sign_up_form.errors %}
+            {% for err in sign_up_form.errors %}
+                <p style="color:red;">Your username and password didn't match. Please try again.</p>
+             {% endfor %}
+        {% endif %}
+
+        <form method="post" action="{% url PubsProject.pub4me.views.sign_up %}">
+            {% csrf_token %}
+            {{ sign_up_form.as_p }}
+            <input type="submit" value="Create" />
+        </form>
+
+    {% else %}
+    
+    {% if form.errors %}
+        <p  style="color:red;">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <form method="post" action="{% url django.contrib.auth.views.login %}">
+        {% csrf_token %}
+    <table>
+    <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+    </tr>
+    </table>
+
+    <input type="submit" value="login" />New User? <a href="{% url PubsProject.pub4me.views.sign_up %}">Register Now</a>
+    <input type="hidden" name="next" value="{% url PubsProject.pub4me.views.index %}" />
+    </form>
+    {% endif %}
+{% endblock %}

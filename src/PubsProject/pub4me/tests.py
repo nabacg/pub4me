@@ -1,13 +1,7 @@
-"""
-This file demonstrates two different styles of tests (one doctest and one
-unittest). These will both pass when you run "manage.py test".
-
-Replace these with more appropriate tests for your application.
-"""
 from django.test.client import Client
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from pub4me.models import Pub, City
+from pub4me.models import Pub, City, PubUser
 
 TEST_TERM = "Karlik"
 TEST_PUB_NAME = TEST_TERM + "Pub"
@@ -51,6 +45,18 @@ class JsViewTest(TestCase):
         err_msg = response_obj[TEST_ERR_MSG_NAME]
         self.assertNotEqual(None, err_msg)
         self.assertNotEqual(0, len(err_msg))
+
+TEST_USERNAME = "GUTEK"
+TEST_EMAIL = "GUTEK@CZESIO.pl"
+
+class UserCreation(TestCase):
+    def test_create_pub_user(self):
+        new_user = PubUser.objects.create(username = TEST_USERNAME, email = TEST_EMAIL)
+
+        saved_user = PubUser.objects.get(pk = new_user.pk)
+        print new_user, saved_user
+        for attr in ["username", "email"]:
+            self.assertEqual(unicode(getattr(new_user, attr)), getattr(saved_user, attr))
 
 
 

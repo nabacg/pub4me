@@ -3,11 +3,35 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.utils import simplejson
 from PubsProject.pub4me.models import Pub
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from pub4me.forms import PubUserForm
 
-
-
+@login_required
 def index(request):
-    return render_to_response('pub4me/index.html', context_instance=RequestContext(request))
+    return render_to_response('pub4me/index.html', {"user_name": request.user.username}, context_instance=RequestContext(request))
+
+#te 2 widoki przenioslbym do osobnej aplikacji UserManagement
+def logout_view(request):
+    logout(request)
+    return render_to_response('registration/login.html', {"form" : AuthenticationForm()}, context_instance=RequestContext(request))
+
+def sign_up(request):
+    if request.method == "POST":
+#ajaj ale to brzydko zrobione jest.. 
+       # request.POST["password"] = hash(request.POST["password"])
+        sign_up_form = UserCreationForm(request.POST)
+        if sign_up_form.is_valid():
+#            user =
+            sign_up_form.save()
+#            user.password = hash(user.password)
+#            user.save()
+            return render_to_response('registration/login.html', {"form" : AuthenticationForm()}, context_instance=RequestContext(request))
+    else:
+        sign_up_form = UserCreationForm()
+    return render_to_response('registration/login.html', {'sign_up_form':sign_up_form}, context_instance=RequestContext(request))
+#az dotad ;)
 
 def pub_autocomplete(request):
     if request.method == 'GET':

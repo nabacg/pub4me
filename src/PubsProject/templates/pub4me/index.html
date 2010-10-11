@@ -13,7 +13,12 @@
 	</head>
 	<body>
 		<div id="content">
+            {% block main_content %}
+
 			<div id="place">
+                {% if user_name %}
+                    <h1> Witaj {{user_name }} </h1><a href="/logout/">Wyloguj</a>
+                {% endif %}
 				<h1>Nie wiesz gdzie iść wieczorem?</h1>
 				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce.</p>
 				<form id="find_place" action="#" method="post">				
@@ -36,6 +41,7 @@
 				<p>Twoim nowym ulubionym miejscem jest <span id="result_place">Bomba</span></p>
 				<p><a id="next" href="">dawaj następną</a> | <a id="been" href="">byłem</a></p>									
 			</div>
+            {% endblock %}
 		</div>	
 	</body>
 </html>
