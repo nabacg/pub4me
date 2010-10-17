@@ -26,6 +26,18 @@ ol, ul {
 }
 
 /* end of reset.css */
+
+.right {
+	float: right;
+}
+
+.container {
+	margin: 0 auto;
+	width: 960px;
+}
+
+
+
 body {
 }
 
