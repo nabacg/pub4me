@@ -19,14 +19,9 @@ def logout_view(request):
 
 def sign_up(request):
     if request.method == "POST":
-#ajaj ale to brzydko zrobione jest.. 
-       # request.POST["password"] = hash(request.POST["password"])
         sign_up_form = UserCreationForm(request.POST)
         if sign_up_form.is_valid():
-#            user =
             sign_up_form.save()
-#            user.password = hash(user.password)
-#            user.save()
             return render_to_response('registration/login.html', {"form" : AuthenticationForm()}, context_instance=RequestContext(request))
     else:
         sign_up_form = UserCreationForm()
