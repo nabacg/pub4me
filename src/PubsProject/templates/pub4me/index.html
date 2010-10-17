@@ -12,6 +12,7 @@
 	</head>
 	<body>
 		<div class="container">
+			
 			<div class="header">
 				<span class="right">
 				{% if user_name %}
@@ -19,42 +20,25 @@
         {% endif %}
 				</span>
 			</div>
+			
 			<div class="content">
 				{% block main_content %}
+				
 				<h1>Nie wiesz gdzie iś wieczorem?</h1>
 				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce</p>
 				
-				<div id="place">
-          <form id="find_place" action="#" method="post">				
-					<div id="first_place">
-
-						<input id="place_id" type="hidden" name="place[id]" value="1" />
-						<input id="country_id" type="hidden" name="place[city_id]" value="2" />
-						<input class="placename" id="first_place_name" type="text" name="place[name]" value=""/>											 
-					</div>
-					<div id="second_place">
-						<p class="info">Podaj drugie miejsce, a dostaniesz lepsze wyniki</p>
-						<input class="placename" id="second_place_name" type="text" name="place[name]" value=""/>	
-						<input class="submit" id="add_place_submit" type="submit" value="Podaj drugie miejsce" />													
-						<input class="submit" id="second_place_name_submit" type="submit" value="Ok, dajesz teraz wynik!" />							 
-					</div>				
-				</form>						
-			</div>
-
-			<div id="result">
-				<p>Twoim nowym ulubionym miejscem jest <span id="result_place">Bomba</span></p>
-				<p><a id="next" href="">dawaj następną</a> | <a id="been" href="">byłem</a></p>									
-			</div>
+				<form action="." method="post">
+				{% for field in form %}
+            {{ field }}
+        {% endfor %}
+				</form>
 				
-				
-				
-				{% endblock %}
+				{% endblock %}							
 			</div>
+														
 			<div class="footer">
 				
 			</div>
-		</div>
-            
-		</div>	
+		</div>           	
 	</body>
 </html>

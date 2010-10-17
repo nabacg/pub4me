@@ -7,10 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from PubsProject.pub4me.forms import PubUserForm
+from PubsProject.pub4me.forms import PubForm
 
 @login_required
 def index(request):
-    return render_to_response('pub4me/index.html', {"user_name": request.user.username}, context_instance=RequestContext(request))
+    form = PubForm()
+    return render_to_response('pub4me/index.html', {"user_name": request.user.username, 'form': form}, context_instance=RequestContext(request))
 
 #te 2 widoki przenioslbym do osobnej aplikacji UserManagement
 def logout_view(request):
