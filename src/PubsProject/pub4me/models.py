@@ -26,7 +26,7 @@ class PubUser(models.Model):
     pubs = models.ManyToManyField(Pub)
 
     def __unicode__(self):
-        return "PubUser for %s" % user.username
+        return "PubUser for %s" % self.user.username
     
     def create_pub_user(sender, instance, created, **kwargs):
         if created:
