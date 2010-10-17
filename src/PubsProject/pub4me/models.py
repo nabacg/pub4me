@@ -25,6 +25,9 @@ class PubUser(models.Model):
  #   time_setup = models.TimeField()
     pubs = models.ManyToManyField(Pub)
 
+    def __unicode__(self):
+        return "PubUser for %s" % user.username
+    
     def create_pub_user(sender, instance, created, **kwargs):
         if created:
             PubUser.objects.get_or_create(user = instance)
