@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
  
 class City(models.Model):
     id = models.CharField(max_length=50, primary_key=True)
@@ -16,12 +17,19 @@ class Pub(models.Model):
     def __unicode__(self):
         return self.name
 
-class PubUser(User):
+class PubUser(models.Model):
+    user = models.ForeignKey(User)
 #    email = models.EmailField(max_length=100)
     registered = models.BooleanField(default=False)
 #    time_registered = models.TimeField()
  #   time_setup = models.TimeField()
     pubs = models.ManyToManyField(Pub)
+
+    def create_pub_user(sender, instance, created, **kwargs):
+        if created:
+            PubUser.objects.get_or_create(user = instance)
+
+    post_save.connect(create_pub_user, sender=User)
     
 class UserAction(models.Model): 
     USER_ACTION_TYPES = (

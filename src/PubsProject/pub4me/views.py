@@ -23,8 +23,7 @@ def sign_up(request):
     if request.method == "POST":
         sign_up_form = UserCreationForm(request.POST)
         if sign_up_form.is_valid():
-            created_user = sign_up_form.save()
-            #PubUser.objects.create()
+            sign_up_form.save()
             return render_to_response('registration/login.html', {"form" : AuthenticationForm()}, context_instance=RequestContext(request))
     else:
         sign_up_form = UserCreationForm()
