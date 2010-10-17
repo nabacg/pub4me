@@ -3,14 +3,16 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.utils import simplejson
 from PubsProject.pub4me.models import Pub
-from django.contrib.auth.decorators import login_required
+#from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from PubsProject.pub4me.forms import PubUserForm
+#from PubsProject.pub4me.forms import PubUserForm
 
-@login_required
 def index(request):
-    return render_to_response('pub4me/index.html', {"user_name": request.user.username}, context_instance=RequestContext(request))
+    params = {}
+    if request.user.is_authenticated():
+        params['user_name'] = request.user.username
+    return render_to_response('pub4me/index.html', params, context_instance=RequestContext(request))
 
 #te 2 widoki przenioslbym do osobnej aplikacji UserManagement
 def logout_view(request):
@@ -21,7 +23,8 @@ def sign_up(request):
     if request.method == "POST":
         sign_up_form = UserCreationForm(request.POST)
         if sign_up_form.is_valid():
-            sign_up_form.save()
+            created_user = sign_up_form.save()
+            #PubUser.objects.create()
             return render_to_response('registration/login.html', {"form" : AuthenticationForm()}, context_instance=RequestContext(request))
     else:
         sign_up_form = UserCreationForm()

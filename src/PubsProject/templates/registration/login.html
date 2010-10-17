@@ -5,7 +5,7 @@
     {% if sign_up_form %}
         {% if sign_up_form.errors %}
             {% for err in sign_up_form.errors %}
-                <p style="color:red;">Your username and password didn't match. Please try again.</p>
+                <p style="color:red;">Invalid: {{ err }}</p>
              {% endfor %}
         {% endif %}
 
