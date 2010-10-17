@@ -8,11 +8,13 @@ from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from PubsProject.pub4me.forms import PubUserForm
 from PubsProject.pub4me.forms import PubForm
+from django.forms.formsets import formset_factory
 
 @login_required
 def index(request):
-    form = PubForm()
-    return render_to_response('pub4me/index.html', {"user_name": request.user.username, 'form': form}, context_instance=RequestContext(request))
+    PubFormSet = formset_factory(PubForm, extra=3, max_num=5)
+    formset = PubFormSet()
+    return render_to_response('pub4me/index.html', {"user_name": request.user.username, "formset": formset}, context_instance=RequestContext(request))
 
 #te 2 widoki przenioslbym do osobnej aplikacji UserManagement
 def logout_view(request):

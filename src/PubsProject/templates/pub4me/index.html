@@ -16,7 +16,7 @@
 			<div class="header">
 				<span class="right">
 				{% if user_name %}
-        	{{user_name }} <a href="logout/">Wyloguj</a>
+        	{{user_name }} <a href="logout/">wyloguj</a>
         {% endif %}
 				</span>
 			</div>
@@ -28,9 +28,15 @@
 				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce</p>
 				
 				<form action="." method="post">
-				{% for field in form %}
-            {{ field }}
-        {% endfor %}
+				
+				{{ formset.management_form }}
+					{% for form in formset.forms %}	
+					<div class="pub_field">	
+						{% for field in form %} 
+	            {{ field }}
+						{% endfor %}
+					</div>								
+	       {% endfor %}
 				</form>
 				
 				{% endblock %}							

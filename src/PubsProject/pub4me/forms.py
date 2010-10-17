@@ -1,4 +1,4 @@
-from django.forms import ModelForm, HiddenInput
+from django.forms import ModelForm, HiddenInput, TextInput
 from PubsProject.pub4me.models import PubUser
 from PubsProject.pub4me.models import Pub
 
@@ -11,8 +11,8 @@ class PubUserForm(ModelForm):
 class PubForm(ModelForm):
     class Meta:
         model = Pub
+        fields = ('id', 'name')
         widgets = {
-                   'location' : HiddenInput(), 
-                   'city' : HiddenInput(),
-                   'ext_service_id_kk' : HiddenInput()                   
+                   'id' : HiddenInput(),
+                   'name' : TextInput(attrs={'class':'autocomplete'})                
                    }

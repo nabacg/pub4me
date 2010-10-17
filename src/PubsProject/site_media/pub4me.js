@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("input#first_place_name").autocomplete({
+    $("input.autocomplete").autocomplete({
         source: "pub_autocomplete",
 		minLength: 2,
         select: function(event, ui){
