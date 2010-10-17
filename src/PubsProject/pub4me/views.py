@@ -6,7 +6,7 @@ from PubsProject.pub4me.models import Pub
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from pub4me.forms import PubUserForm
+from PubsProject.pub4me.forms import PubUserForm
 
 @login_required
 def index(request):

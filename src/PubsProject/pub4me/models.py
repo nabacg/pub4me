@@ -5,12 +5,16 @@ class City(models.Model):
     id = models.CharField(max_length=50, primary_key=True)
     pl_name = models.CharField(max_length=100)
     en_name = models.CharField(max_length=100)
+    def __unicode__(self):
+        return self.pl_name
      
 class Pub(models.Model):
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     city = models.ForeignKey(City)
     ext_service_id_kk = models.BigIntegerField() # ID knajpy z serwisu zewnetrzego (knajpy.krakow.pl)
+    def __unicode__(self):
+        return self.name
 
 class PubUser(User):
 #    email = models.EmailField(max_length=100)
@@ -18,7 +22,7 @@ class PubUser(User):
 #    time_registered = models.TimeField()
  #   time_setup = models.TimeField()
     pubs = models.ManyToManyField(Pub)
-       
+    
 class UserAction(models.Model): 
     USER_ACTION_TYPES = (
         (u'LP', u'User liked a pub'),
