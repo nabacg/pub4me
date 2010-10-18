@@ -3,10 +3,9 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.utils import simplejson
 from PubsProject.pub4me.models import Pub
-#from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-#from PubsProject.pub4me.forms import PubUserForm
+from PubsProject.users.userfacade import create, create_and_login
 
 def index(request):
     params = {}
@@ -23,8 +22,12 @@ def sign_up(request):
     if request.method == "POST":
         sign_up_form = UserCreationForm(request.POST)
         if sign_up_form.is_valid():
-            sign_up_form.save()
-            return render_to_response('registration/login.html', {"form" : AuthenticationForm()}, context_instance=RequestContext(request))
+            #sign_up_form.save()
+            #user = create(sign_up_form.data['username'], sign_up_form.data['password1'], authenticate_user = True)
+            #user = authenticate(username = user.username, password = sign_up_form.data['password1'])
+            #login(request, user)
+            user = create_and_login(sign_up_form.data['username'], sign_up_form.data['password1'], request)
+            return render_to_response('pub4me/index.html', {"user_name": user.username }, context_instance=RequestContext(request))
     else:
         sign_up_form = UserCreationForm()
     return render_to_response('registration/login.html', {'sign_up_form':sign_up_form}, context_instance=RequestContext(request))

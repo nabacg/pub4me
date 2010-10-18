@@ -1,7 +1,10 @@
 from django.test.client import Client
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from pub4me.models import Pub, City, PubUser
+from PubsProject.pub4me.models import Pub, City, PubUser
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from PubsProject.users.userfacade import create
 
 TEST_TERM = "Karlik"
 TEST_PUB_NAME = TEST_TERM + "Pub"
@@ -18,7 +21,6 @@ def load_test_data(city_id, pl_name, en_name, pub_name, ext_id):
 
 class JsViewTest(TestCase):
 
-
     def setUp(self):
         if not hasattr(self, '_z'):
             self._c = Client()
@@ -28,7 +30,7 @@ class JsViewTest(TestCase):
     def test_index_view(self):
         response = self._c.post(reverse("PubsProject.pub4me.views.index"))
         self.assertNotEqual(None, response)
-        self.assertEqual(302, response.status_code, "Index view failed to respond")
+        self.assertEqual(200, response.status_code, "Index view failed to respond")
         
 
     def test_valid_pub_search(self):
@@ -55,7 +57,7 @@ SECOND_PASSWORD = "KREMOS"
 SECOND_EMAIL = "KREMOS@pub4.me"
 
 def create_user(user_name, e_mail, pass_word):
-    return PubUser.objects.create(username = user_name, password = pass_word, email = e_mail)
+    return User.objects.create(username = user_name, password = pass_word, email = e_mail)
 
 class AuthenticationViewTest(TestCase):
 
@@ -73,34 +75,55 @@ class AuthenticationViewTest(TestCase):
         self.assertEqual(200, response.status_code)
 
     def test_logged_user_gets_personalized_main_page(self):
-        create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
-        response = self._c.post(reverse("django.contrib.auth.views.login"), {"id_username": TEST_USERNAME, "id_password": TEST_PASSWORD})
+        user = create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
+        response = self._c.post(reverse("django.contrib.auth.views.login"), {"username": TEST_USERNAME, "password": TEST_PASSWORD})
         self.assertNotEqual(None, response)
         self.assertEqual(200, response.status_code)
         self.assertNotEqual(-1, response.content.find(TEST_USERNAME))
+        user.delete()
         
     def test_create_user_from_view(self):
         response = self._c.post(reverse("PubsProject.pub4me.views.sign_up"), {
-                                                "id_username":  SECOND_USERNAME,
-                                                "id_password":  SECOND_PASSWORD,
-                                                "id_password2": SECOND_PASSWORD})
+                                                "username":  SECOND_USERNAME,
+                                                "password1": SECOND_PASSWORD,
+                                                "password2": SECOND_PASSWORD})
         self.assertEqual(200, response.status_code)
-        created_user = PubUser.objects.filter(username = SECOND_USERNAME)
+        created_user = User.objects.filter(username = SECOND_USERNAME)
         self.assertNotEqual(0, len(created_user))
+        created_user.delete()
 
 
 class UserCreation(TestCase):
     def test_create_pub_user(self):
         new_user = create_user(TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
-        saved_user = PubUser.objects.get(pk = new_user.pk)
-        print new_user, saved_user
+        saved_user = User.objects.get(pk = new_user.pk)
         for attr in ["username", "email"]:
             self.assertEqual(unicode(getattr(new_user, attr)), getattr(saved_user, attr))
+        saved_user.delete()
 
 
+class UserFacadeTest(TestCase):
+
+    def test_create_user_from_form(self):
+        sign_form = UserCreationForm({"username": TEST_USERNAME, "password1": TEST_PASSWORD, "password2": TEST_PASSWORD})
+        new_user = create(sign_form.data['username'], sign_form.data['password1'])
+        saved_user = User.objects.get(pk = new_user.pk)
+        self.assertNotEqual(None, saved_user)
+        self.assertEqual(TEST_USERNAME, saved_user.username)
+        saved_user.delete()
 
 
-    
-
-
-
+    def test_create_user_from_json(self):
+        json_request = {"username": TEST_USERNAME, "password": TEST_PASSWORD}
+        new_user = create(json_request['username'], json_request['password'])
+        saved_user = User.objects.get(pk = new_user.pk)
+        self.assertNotEqual(None, saved_user)
+        self.assertEqual(TEST_USERNAME, saved_user.username)
+        saved_user.delete()
+        
+    def test_create_user_from_fcb(self):        
+        new_user = create(TEST_USERNAME, TEST_PASSWORD)
+        saved_user = User.objects.get(pk = new_user.pk)
+        self.assertNotEqual(None, saved_user)
+        self.assertEqual(TEST_USERNAME, saved_user.username)
+        saved_user.delete()
