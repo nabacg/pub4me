@@ -9,7 +9,7 @@
              {% endfor %}
         {% endif %}
 
-        <form method="post" action="{% url PubsProject.pub4me.views.sign_up %}">
+        <form method="post" action="{% url PubsProject.users.views.sign_up %}">
             {% csrf_token %}
             {{ sign_up_form.as_p }}
             <input type="submit" value="Create" />
@@ -34,7 +34,7 @@
     </tr>
     </table>
 
-    <input type="submit" value="login" />New User? <a href="{% url PubsProject.pub4me.views.sign_up %}">Register Now</a>
+    <input type="submit" value="login" />New User? <a href="{% url PubsProject.users.views.sign_up %}">Register Now</a>
     <input type="hidden" name="next" value="{% url PubsProject.pub4me.views.index %}" />
     </form>
     {% endif %}

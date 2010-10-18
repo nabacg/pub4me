@@ -17,7 +17,7 @@
 
 			<div id="place">
                 {% if user_name %}
-                    <h1> Witaj {{user_name }} </h1><a href="{% url PubsProject.pub4me.views.logout_view %}">Wyloguj</a>
+                    <h1> Witaj {{user_name }} </h1><a href="{% url PubsProject.users.views.logout_view %}">Wyloguj</a>
                 {% endif %}
 				<h1>Nie wiesz gdzie iść wieczorem?</h1>
 				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce.</p>

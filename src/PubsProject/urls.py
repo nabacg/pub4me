@@ -8,12 +8,7 @@ admin.autodiscover()
    
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
-#TO tutaj specjalnie w tym url.py bo mysle zeby przeniesc te widoki do osobnej aplikacji UserManagement
-    #LOGIN VIEW
-    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
-    #LOGOUT
-    (r'^logout/', 'PubsProject.pub4me.views.logout_view'),
-    (r'^sign/$', 'PubsProject.pub4me.views.sign_up'),
+    (r'^', include('PubsProject.users.urls')),
     (r'^', include('PubsProject.pub4me.urls')),
     #(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'site_media').replace('\\','/')})
 )
