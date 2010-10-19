@@ -14,5 +14,5 @@ class PubForm(ModelForm):
         fields = ('id', 'name')
         widgets = {
                    'id' : HiddenInput(),
-                   'name' : TextInput(attrs={'class':'autocomplete'})                
+                   'name' : TextInput(attrs={'class':'autocomplete placename'})                
                    }

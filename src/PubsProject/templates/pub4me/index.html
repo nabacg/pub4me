@@ -24,8 +24,8 @@
 			<div class="content">
 				{% block main_content %}
 				
-				<h1>Nie wiesz gdzie iś wieczorem?</h1>
-				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce</p>
+				<h1>Nie wiesz gdzie iść wieczorem?</h1>
+				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce.</p>
 				
 				<form action="." method="post">
 				
@@ -34,7 +34,9 @@
 					<div class="pub_field">	
 						{% for field in form %} 
 	            {{ field }}
-						{% endfor %}
+						{% endfor %}						
+						<input type="submit" class="primary" value="Poka wyniki" />
+						<a href="#" class="more">+ chcę podać więcej miejsc</a>
 					</div>								
 	       {% endfor %}
 				</form>

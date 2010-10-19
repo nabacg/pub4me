@@ -1,20 +1,25 @@
 $(document).ready(function(){
+	
+	var $pubInput = $("input.autocomplete").eq(0).clone();
+	
     $("input.autocomplete").autocomplete({
         source: "pub_autocomplete",
 		minLength: 2,
-        select: function(event, ui){
-            $("#first_place").replaceWith('<p class="place_result">Lubisz: ' + ui.item.value + '</p>');
-            $("#second_place").show(500);
-
-            $("input#second_place_name").autocomplete({
-                source: "pub_autocomplete",
-				minLength: 2,
-                select: function(event, ui){
-                    $(".info").hide();
-                    $("#second_place_name").replaceWith('<p class="place_result">Lubisz: ' + ui.item.value + '</p>');
-                }
-            });
+        select: function(event, ui){  
+    	 $(".more").show();
         }
+    });
+    
+    $(".more").click(function(){
+    	$("input.autocomplete").last().after($pubInput);    	
+    	$(".more").hide();
+    	$("input.autocomplete").autocomplete({
+            source: "pub_autocomplete",
+    		minLength: 2,
+            select: function(event, ui){  
+        	 $(".more").show();
+            }
+        });
     });
     
     $("#add_place_submit").click(function(){

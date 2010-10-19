@@ -12,7 +12,7 @@ from django.forms.formsets import formset_factory
 
 @login_required
 def index(request):
-    PubFormSet = formset_factory(PubForm, extra=3, max_num=5)
+    PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
     formset = PubFormSet()
     return render_to_response('pub4me/index.html', {"user_name": request.user.username, "formset": formset}, context_instance=RequestContext(request))
 
