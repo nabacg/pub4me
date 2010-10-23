@@ -6,9 +6,20 @@
 		<meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="/site_media/jquery.formset.js"></script> 
 		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
   	<link rel="stylesheet" type="text/css" href="/site_media/pub4me.css"/>
-		<script type="text/javascript" src="/site_media/pub4me.js"></script>		 
+		<script type="text/javascript" src="/site_media/pub4me.js"></script>
+		<script type="text/javascript">
+    	$(function() {
+        $('form.pubs div').formset({
+					addText: '+ dodaj kolejną',
+					addCssClass: 'addformlink',
+					deleteCssClass: 'removeformlink',
+					prefix: '{{ formset.prefix }}'
+        })
+    	})
+   	</script>		 
 	</head>
 	<body>
 		<div class="container">
@@ -27,18 +38,17 @@
 				<h1>Nie wiesz gdzie iść wieczorem?</h1>
 				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce.</p>
 				
-				<form action="." method="post">
+				<form class="pubs" action="." method="post">
 				
 				{{ formset.management_form }}
 					{% for form in formset.forms %}	
-					<div class="pub_field">	
+					<div id="{{form.prefix}}" class="pub_field">	
 						{% for field in form %} 
 	            {{ field }}
-						{% endfor %}						
-						<input type="submit" class="primary" value="Poka wyniki" />
-						<a href="#" class="more">+ chcę podać więcej miejsc</a>
-					</div>								
+						{% endfor %}												
+					</div>													
 	       {% endfor %}
+				 <input type="submit" class="primary" value="Poka wyniki" />
 				</form>
 				
 				{% endblock %}							
