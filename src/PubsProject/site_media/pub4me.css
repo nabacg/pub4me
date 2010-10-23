@@ -46,9 +46,13 @@ h1 {
   margin-bottom: 10px;
 }
 
-.more {
+.addformlink {
 	clear: both;
 	float: left;
+}
+
+.removeformlink {
+	display: none;
 }
 
 .primary {
