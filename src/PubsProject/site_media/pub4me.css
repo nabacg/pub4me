@@ -56,7 +56,9 @@ h1 {
 }
 
 .primary {
-	padding: 4px 20px;
+	widht: 200px;
+	display: block;
+	padding: 10px 20px;
 }
 
 

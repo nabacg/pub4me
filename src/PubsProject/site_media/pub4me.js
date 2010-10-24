@@ -27,4 +27,22 @@ $(function() {
 			$("#"+idInputId).val(ui.item.id);
         }
     });
+	
+	$(".primary").click(function(){
+		$("form#"+$(this).attr("rel")).submit();
+		return false;
+	});
+	
+	
+	$("#pubs_form").submit(function(){
+		$.ajax({
+			type: "POST",
+			url: "pub_recommend",
+			data: $("#pubs_form").serialize(),
+			success: function(data){
+				window.alert(data);				
+			}
+		});
+		return false;
+	});
 });

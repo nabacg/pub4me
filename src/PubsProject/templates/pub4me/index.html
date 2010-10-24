@@ -28,17 +28,17 @@
 				<h1>Nie wiesz gdzie iść wieczorem?</h1>
 				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce.</p>
 				
-				<form class="pubs" action="." method="post">
-				
+				<form id="pubs_form" class="pubs" action="/pub_recommend" method="post">
+				{% csrf_token %}								
 				{{ formset.management_form }}
 					{% for form in formset.forms %}	
-					<div id="{{formset.prefix}}" class="pub_field">	
+					<div class="pub_field">	
 						{% for field in form %} 
 	            {{ field }}
 						{% endfor %}												
 					</div>													
 	       {% endfor %}
-				 <input type="submit" class="primary" value="Poka wyniki" />
+				 <a href="/pub_recommend" class="primary" rel="pubs_form">Poka wyniki!</a>				 
 				</form>
 				
 				{% endblock %}							

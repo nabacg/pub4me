@@ -37,6 +37,12 @@ def sign_up(request):
     return render_to_response('registration/login.html', {'sign_up_form':sign_up_form}, context_instance=RequestContext(request))
 #az dotad ;)
 
+def pub_recommend(request):
+    PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
+    if request.method == "POST":
+        formset = PubFormSet(request.POST)        
+        return HttpResponse("TODO")
+
 def pub_autocomplete(request):
     if request.method == 'GET':
         if request.GET.__contains__('term'):
