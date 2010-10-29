@@ -1,39 +1,48 @@
-$(document).ready(function(){
-    $("input#first_place_name").autocomplete({
+$(function() {
+	
+	$('form.pubs div').formset({
+		addText: '+ dodaj kolejną',
+		addCssClass: 'addformlink',
+		deleteCssClass: 'removeformlink',
+		added: function (row) {
+		row.find(".autocomplete").autocomplete({
+	        source: "pub_autocomplete",
+			minLength: 2,
+	        select: function(event, ui){
+				var nameInputId = $(this).attr("id");
+				var idInputId = nameInputId.replace("name", "id");
+				$("#"+idInputId).val(ui.item.id);
+	        }
+	    	});	
+			row.find(".autocomplete").autocomplete("enable");
+		}
+    });
+	
+	$(".autocomplete").autocomplete({
         source: "pub_autocomplete",
 		minLength: 2,
         select: function(event, ui){
-            $("#first_place").replaceWith('<p class="place_result">Lubisz: ' + ui.item.value + '</p>');
-            $("#second_place").show(500);
-
-            $("input#second_place_name").autocomplete({
-                source: "pub_autocomplete",
-				minLength: 2,
-                select: function(event, ui){
-                    $(".info").hide();
-                    $("#second_place_name").replaceWith('<p class="place_result">Lubisz: ' + ui.item.value + '</p>');
-                }
-            });
+			var nameInputId = $(this).attr("id");
+			var idInputId = nameInputId.replace("name", "id");
+			$("#"+idInputId).val(ui.item.id);
         }
     });
-    
-    $("#add_place_submit").click(function(){
-        $(this).hide();
-        $("#second_place_name").show();
-        return false;
-    });
-    
-    $("#second_place_name_submit").click(function(){
-        $(this).hide();
-        $("#second_place_name").hide();
-        $("#result").show();
-        return false;
-    });
-    
-    $("#next").add("#been").click(function(){
-        $("#result").hide('slow').find("#result_place").text('Betel');
-        $("#result").show('slow');
-        return false;
-    });
-    
+	
+	$(".primary").click(function(){
+		$("form#"+$(this).attr("rel")).submit();
+		return false;
+	});
+	
+	
+	$("#pubs_form").submit(function(){
+		$.ajax({
+			type: "POST",
+			url: "pub_recommend",
+			data: $("#pubs_form").serialize(),
+			success: function(data){
+				window.alert(data);				
+			}
+		});
+		return false;
+	});
 });

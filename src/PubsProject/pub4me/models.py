@@ -10,6 +10,7 @@ class City(models.Model):
         return self.pl_name
      
 class Pub(models.Model):
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
     city = models.ForeignKey(City)
