@@ -45,6 +45,11 @@ DATABASES = {
     }
 }
 
+# Integracja z Facebookiem
+FACEBOOK_APP_ID = '153211921382271'
+FACEBOOK_APP_SECRET = '9cff3c88942fa6a35fdc706f090ead5a'
+
+
 AUTH_PROFILE_MODULE = 'pub4me.PubUser'
 
 # Local time zone for this installation. Choices can be found here:

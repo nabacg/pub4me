@@ -25,6 +25,9 @@ class PubUser(models.Model):
     registered = models.BooleanField(default=False)
 #    time_registered = models.TimeField()
  #   time_setup = models.TimeField()
+    fb_id = models.IntegerField(null=True)
+    fb_first_name = models.CharField(max_length=100)
+    fb_last_name = models.CharField(max_length=100)
     pubs = models.ManyToManyField(Pub)
 
     def __unicode__(self):
