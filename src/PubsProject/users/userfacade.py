@@ -7,7 +7,7 @@ import random
 def create(user_name, password, is_guest = False, authenticate_user = False):
     new_user = User()
     if is_guest:
-        #TODO W taki sposob nie moge przydzielac ID gosciom. Co z tym zrobic?
+        #TODO: W taki sposob nie moge przydzielac ID gosciom. Co z tym zrobic?
         user_name = 'guest_' + str(random.randint(0,1000000000))
         password = settings.GUEST_USER_AUTO_PASSWORD
         

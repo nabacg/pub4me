@@ -21,15 +21,8 @@ def index(request):
     
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
     formset = PubFormSet()
-    return render_to_response('pub4me/index.html', {"user_name": request.user.username, "formset": formset}, context_instance=RequestContext(request))
-
-''' DO WYWALENIA jezeli merge kremos-grzesiek sie zakonczy
-def index(request):
-    params = {}
-    if request.user.is_authenticated():
-        params['user_name'] = request.user.username
-    return render_to_response('pub4me/index.html', params, context_instance=RequestContext(request))
-'''
+    username = PubUser.objects.get(user=request.user.id).nice_name()
+    return render_to_response('pub4me/index.html', {"user_name": username, "formset": formset}, context_instance=RequestContext(request))
 
 def pub_recommend(request):
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
@@ -90,7 +83,7 @@ def facebook(request):
                 user_name = existing_user.username
                 existing_user = authenticate(username = user_name, password = settings.GUEST_USER_AUTO_PASSWORD)
                 login(request, existing_user)
-                return HttpResponse("Zalogowalismy cie na Twoje stare konto. Twoj facebookowy ID: " + fb_user_id +", a na imie masz: " + fb_user_first_name)
+                return HttpResponseRedirect('/')
             
             #W tym momencie znamy goscia dane z fejsa - min fejsowe ID. 
             this_user = request.user
@@ -103,8 +96,8 @@ def facebook(request):
                 this_user = create_and_login(None, None, request, is_guest = True)
             
             connect_with_facebook(this_user, fb_user_id, fb_user_first_name, fb_user_last_name)
-                
-            return HttpResponse("Twoj facebookowy ID: " + fb_user_id +", a na imie masz: " + fb_user_first_name)
+             
+            return HttpResponseRedirect('/')
         else:
             #Strzal do Fejsbuka (poprzez redirect).
             #User musi uprawnic nasza aplikacje wenatrz FB. 

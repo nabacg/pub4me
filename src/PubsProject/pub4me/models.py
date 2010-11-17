@@ -33,6 +33,14 @@ class PubUser(models.Model):
     def __unicode__(self):
         return "PubUser for %s" % self.user.username
     
+    def nice_name(self):
+        if self.registered:
+            return self.user.username
+        elif self.fb_id:
+            return self.fb_first_name
+        else: #auto user
+            return None 
+        
     def create_pub_user(sender, instance, created, **kwargs):
         if created:
             PubUser.objects.get_or_create(user = instance)
