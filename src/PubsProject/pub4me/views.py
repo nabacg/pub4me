@@ -2,9 +2,12 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from PubsProject.pub4me.models import Pub
+from PubsProject.pub4me.models import PubUser
 from PubsProject.pub4me.forms import PubForm
-from PubsProject.users.userfacade import connect_with_facebook
+from PubsProject.users.userfacade import connect_with_facebook, create_and_login
 from django.forms.formsets import formset_factory
 from django.conf import settings
 import urllib
@@ -12,6 +15,10 @@ import cgi
 from django.utils import simplejson as json
 
 def index(request):
+    if not request.user.is_authenticated():
+        create_and_login(None, None, request, is_guest = True)
+    request.session.set_expiry(60*60*24*365*10) #sesja wygasnie za 10 lat :)
+    
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
     formset = PubFormSet()
     return render_to_response('pub4me/index.html', {"user_name": request.user.username, "formset": formset}, context_instance=RequestContext(request))
@@ -76,13 +83,26 @@ def facebook(request):
             fb_user_first_name = profile["first_name"]
             fb_user_last_name = profile["last_name"]
             
-            #### TODO: W tym momencie znamy ID z fejsa. 
-            #Tutaj trzeba je skojarzyc z kontem usera (ktore z zalozenia powinno juz byc automatycznie zalozone)
-            this_user = request.user
-            if not this_user.is_authenticated():
-                create_and_login(user_name, password, request):
-            pub_user = connect_with_facebook(this_user, fb_user_id, fb_user_first_name, fb_user_last_name)
+            #Jezeli ten FB ID juz jest skojarzony z jakims innym kontem to tylko przelogowujemy usera na tamto konto
+            if PubUser.objects.filter(fb_id__exact=long(fb_user_id)).count() > 0:
+                logout(request)
+                existing_user = PubUser.objects.get(fb_id__exact = long(fb_user_id)).user
+                user_name = existing_user.username
+                existing_user = authenticate(username = user_name, password = settings.GUEST_USER_AUTO_PASSWORD)
+                login(request, existing_user)
+                return HttpResponse("Zalogowalismy cie na Twoje stare konto. Twoj facebookowy ID: " + fb_user_id +", a na imie masz: " + fb_user_first_name)
             
+            #W tym momencie znamy goscia dane z fejsa - min fejsowe ID. 
+            this_user = request.user
+            
+            #Jezeli user jeszcze nie ma konta (chociazby automatycznie zakladanego) 
+            #i nie jest zalogowany, to zakladymy konto i logujemy go na szybkosci
+            #Jezeli gosc mial konto na login i haslo, a chce je polaczyc z FB, to tez zakladamy nowe, a poprzednie olewamy
+            #Za duzo pieprzenia z laczeniem dwoch typow kont
+            if (not this_user.is_authenticated()) or ((this_user.is_authenticated() and PubUser.objects.get(user = this_user.id).registered)):
+                this_user = create_and_login(None, None, request, is_guest = True)
+            
+            connect_with_facebook(this_user, fb_user_id, fb_user_first_name, fb_user_last_name)
                 
             return HttpResponse("Twoj facebookowy ID: " + fb_user_id +", a na imie masz: " + fb_user_first_name)
         else:

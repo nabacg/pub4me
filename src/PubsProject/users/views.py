@@ -12,7 +12,7 @@ def sign_up(request):
     if request.method == "POST":
         sign_up_form = UserCreationForm(request.POST)
         if sign_up_form.is_valid():
-            user = create_and_login(sign_up_form.data['username'], sign_up_form.data['password1'], request)
+            user = create_and_login(sign_up_form.data['username'], sign_up_form.data['password1'], request, False)
             return render_to_response('pub4me/index.html', {"user_name": user.username }, context_instance=RequestContext(request))
     else:
         sign_up_form = UserCreationForm()

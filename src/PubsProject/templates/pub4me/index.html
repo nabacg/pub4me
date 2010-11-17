@@ -18,8 +18,12 @@
 			<div class="header">
 				<span class="right">
 				{% if user_name %}
-        	{{user_name }} <a href="logout/">wyloguj</a>
-        {% endif %}
+        			{{user_name }} <a href="logout/">wyloguj</a>
+				{% else %}
+					<a href="facebook">połącz z Facebookiem</a> |
+					<a href="sign">załóż konto</a> |
+					<a href="accounts/login">zaloguj</a>
+        		{% endif %}
 				</span>
 			</div>
 			

@@ -21,11 +21,11 @@ class Pub(models.Model):
 
 class PubUser(models.Model):
     user = models.ForeignKey(User)
-#    email = models.EmailField(max_length=100)
+#   email = models.EmailField(max_length=100)
     registered = models.BooleanField(default=False)
-#    time_registered = models.TimeField()
- #   time_setup = models.TimeField()
-    fb_id = models.IntegerField(null=True)
+#   time_registered = models.TimeField()
+#   time_setup = models.TimeField()
+    fb_id = models.BigIntegerField(null=True)
     fb_first_name = models.CharField(max_length=100)
     fb_last_name = models.CharField(max_length=100)
     pubs = models.ManyToManyField(Pub)

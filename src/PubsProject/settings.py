@@ -49,6 +49,7 @@ DATABASES = {
 FACEBOOK_APP_ID = '153211921382271'
 FACEBOOK_APP_SECRET = '9cff3c88942fa6a35fdc706f090ead5a'
 
+GUEST_USER_AUTO_PASSWORD = 'automatyczne_haslo_goscia_666_*&^$%^%$@#%'
 
 AUTH_PROFILE_MODULE = 'pub4me.PubUser'
 
@@ -128,3 +129,6 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+#Moze z czasem, z powodow wydajnosciowych, trzeba bedzie cache'owac sesje:
+#SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
