@@ -2,13 +2,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from PubsProject.pub4me.models import PubUser
 from django.conf import settings
-import random
+import uuid
+
 
 def create(user_name, password, is_guest = False, authenticate_user = False):
     new_user = User()
     if is_guest:
         #TODO: W taki sposob nie moge przydzielac ID gosciom. Co z tym zrobic?
-        user_name = 'guest_' + str(random.randint(0,1000000000))
+        user_name = 'guest_' + str(uuid.uuid4())
         password = settings.GUEST_USER_AUTO_PASSWORD
         
     new_user.username = user_name

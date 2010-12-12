@@ -17,7 +17,8 @@ from django.utils import simplejson as json
 def index(request):
     if not request.user.is_authenticated():
         create_and_login(None, None, request, is_guest = True)
-    request.session.set_expiry(60*60*24*365*10) #sesja wygasnie za 10 lat :)
+    request.session.set_expiry(60*60*24*365*2)  #sesja wygasnie za 2 lata, 
+                                                #    bo plota glosi ze 10 letnie ciastka nie sa lubiane przez przegladarki :)
     
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
     formset = PubFormSet()
