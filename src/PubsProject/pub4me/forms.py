@@ -1,6 +1,6 @@
 from django.forms import ModelForm, HiddenInput, TextInput
-from PubsProject.pub4me.models import PubUser
-from PubsProject.pub4me.models import Pub
+from pub4me.models import PubUser
+from pub4me.models import Pub
 
 
 class PubUserForm(ModelForm):

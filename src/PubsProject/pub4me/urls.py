@@ -1,12 +1,12 @@
 from django.conf.urls.defaults import *
 from django.views.generic import list_detail
-from PubsProject.pub4me.models import Pub
+from pub4me.models import Pub
 
 info_dict = {
     'queryset': Pub.objects.all(),
 }
 
-urlpatterns = patterns('PubsProject.pub4me.views',
+urlpatterns = patterns('pub4me.views',
     (r'^$', 'index'),
     (r'^all_pubs$', list_detail.object_list, info_dict), #Niepotrzebne - do wywalenia
     (r'^pub_autocomplete$', 'pub_autocomplete'),

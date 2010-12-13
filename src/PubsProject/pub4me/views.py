@@ -4,10 +4,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from PubsProject.pub4me.models import Pub
-from PubsProject.pub4me.models import PubUser
-from PubsProject.pub4me.forms import PubForm
-from PubsProject.users.userfacade import connect_with_facebook, create_and_login
+from pub4me.models import Pub
+from pub4me.models import PubUser
+from pub4me.forms import PubForm
+from users.userfacade import connect_with_facebook, create_and_login
 from django.forms.formsets import formset_factory
 from django.conf import settings
 import urllib

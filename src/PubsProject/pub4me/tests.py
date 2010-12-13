@@ -1,10 +1,10 @@
 from django.test.client import Client
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from PubsProject.pub4me.models import Pub, City#, PubUser
+from pub4me.models import Pub, City#, PubUser
 #from django.contrib.auth.models import User
 #from django.contrib.auth.forms import UserCreationForm
-#from PubsProject.users.userfacade import create
+#from users.userfacade import create
 
 TEST_TERM = "Karlik"
 TEST_PUB_NAME = TEST_TERM + "Pub"
@@ -28,13 +28,13 @@ class JsViewTest(TestCase):
 
     """Testuje glowny widok zwracajacy Landing Page"""
     def test_index_view(self):
-        response = self._c.post(reverse("PubsProject.pub4me.views.index"))
+        response = self._c.post(reverse("pub4me.views.index"))
         self.assertNotEqual(None, response)
         self.assertEqual(200, response.status_code, "Index view failed to respond")
         
 
     def test_valid_pub_search(self):
-        response = self._c.get(reverse("PubsProject.pub4me.views.pub_autocomplete"), {"term": TEST_PUB_NAME})
+        response = self._c.get(reverse("pub4me.views.pub_autocomplete"), {"term": TEST_PUB_NAME})
         self.assertNotEqual(None, response)
         self.assertEqual(200, response.status_code, "Autocomplete view failed to respond")
         self.assertNotEqual(0, len(response.content))
@@ -42,7 +42,7 @@ class JsViewTest(TestCase):
         self.assertNotEqual(0, len(response_obj))
 
     def test_invalid_pub_search(self):
-        response = self._c.post(reverse("PubsProject.pub4me.views.pub_autocomplete"))
+        response = self._c.post(reverse("pub4me.views.pub_autocomplete"))
         self.assertEqual(200, response.status_code, "Faktycznie aplikacja sie wywalila")
         response_obj = eval(response.content)
         err_msg = response_obj[TEST_ERR_MSG_NAME]

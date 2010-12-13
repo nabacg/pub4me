@@ -1,6 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from PubsProject.users.userfacade import create_and_login
+from users.userfacade import create_and_login
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 

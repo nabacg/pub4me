@@ -1,10 +1,10 @@
 from django.test.client import Client
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-#from PubsProject.pub4me.models import Pub, City, PubUser
+#from pub4me.models import Pub, City, PubUser
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from PubsProject.users.userfacade import create
+from users.userfacade import create
 
 TEST_USERNAME = "GUTEK"
 TEST_PASSWORD = "GUTEK"
@@ -27,7 +27,7 @@ class AuthenticationViewTest(TestCase):
         self.assertEqual(200, response.status_code)
 
     def test_sign_up_view_exists(self):
-        response = self._c.get(reverse("PubsProject.users.views.sign_up"))
+        response = self._c.get(reverse("users.views.sign_up"))
         self.assertNotEqual(None, response)
         self.assertEqual(200, response.status_code)
 
@@ -40,7 +40,7 @@ class AuthenticationViewTest(TestCase):
         user.delete()
 
     def test_create_user_from_view(self):
-        response = self._c.post(reverse("PubsProject.users.views.sign_up"), {
+        response = self._c.post(reverse("users.views.sign_up"), {
                                                 "username":  SECOND_USERNAME,
                                                 "password1": SECOND_PASSWORD,
                                                 "password2": SECOND_PASSWORD})

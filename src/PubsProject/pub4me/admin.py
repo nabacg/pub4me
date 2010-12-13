@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from PubsProject.pub4me.models import Pub
-from PubsProject.pub4me.models import City
-from PubsProject.pub4me.models import PubUser
-from PubsProject.pub4me.models import UserAction
+from pub4me.models import Pub
+from pub4me.models import City
+from pub4me.models import PubUser
+from pub4me.models import UserAction
 
 class PubAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'city', 'ext_service_id_kk')
