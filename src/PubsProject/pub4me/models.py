@@ -54,16 +54,16 @@ class UserAction(models.Model):
     )
     user = models.ForeignKey(PubUser)
     ip = models.IPAddressField()
-    time = models.TimeField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True)
     browser_info = models.CharField(max_length=500)
     referer = models.URLField()
     languages = models.CharField(max_length=100)
     action_type = models.CharField(max_length=3, choices=USER_ACTION_TYPES)
     
 class UserAction_LikedPub(UserAction):
-    useraction = models.OneToOneField(UserAction, primary_key=True)
+    #useraction = models.OneToOneField(UserAction, primary_key=True)
     pub = models.ForeignKey(Pub)
 
 class UserAction_GotSuggestion(UserAction):
-    useraction = models.OneToOneField(UserAction, primary_key=True)
+    #useraction = models.OneToOneField(UserAction, primary_key=True)
     pub = models.ForeignKey(Pub) # Jezeli rekomendujemy wiecej niz jedna knajpe na raz, to trzeba wydzielic osobna tabele many-to-one

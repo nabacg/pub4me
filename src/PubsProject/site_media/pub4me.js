@@ -40,12 +40,18 @@ $(function() {
 	
 	
 	$("#pubs_form").submit(function(){
+		var recommendList = $("#recommendList");
 		$.ajax({
 			type: "POST",
 			url: "pub_recommend",
 			data: $("#pubs_form").serialize(),
 			success: function(data){
-				window.alert(data);				
+				var data = eval('(' + data + ')');
+				for(var i = 0; i < data.length; i++)
+				{
+					var pub = $('<li></li>').text(data[i]);
+					pub.appendTo(recommendList);
+				}				
 			}
 		});
 		return false;

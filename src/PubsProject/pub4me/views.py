@@ -5,7 +5,7 @@ from django.utils import simplejson
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from pub4me.models import Pub
-from pub4me.models import PubUser, UserAction_LikedPub
+from pub4me.models import PubUser, UserAction_LikedPub, UserAction_GotSuggestion
 from pub4me.forms import PubForm
 from users.userfacade import connect_with_facebook, create_and_login
 from django.forms.formsets import formset_factory
@@ -15,6 +15,7 @@ import cgi
 import time
 from django.utils import simplejson as json
 from django.shortcuts import get_object_or_404
+from pub4me import recommendations
 
 def index(request):
     if not request.user.is_authenticated():
@@ -29,11 +30,13 @@ def index(request):
 
 def pub_recommend(request):
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
+    topPubs = recommendations.get_top_matches(request.user.pubuser_set.all()[0])
     if request.method == "POST":
         formset = PubFormSet(request.POST) 
-        pub_id = Pub.objects.all()[4].id
-        save_user_action(request, pub_id , 'GS')       
-        return HttpResponse("TODO")
+        
+    pub_id = Pub.objects.all()[4].id    
+    save_user_action(request, pub_id , 'GS')       
+    return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
     
 def pub_selected(request):
     pub_id = request.REQUEST['id']
@@ -46,7 +49,10 @@ def pub_selected(request):
 # przeniesc gdzei indziej
 
 def save_user_action(request, pub_id, action_type):
-    action = UserAction_LikedPub()
+    if action_type == 'LP':
+        action = UserAction_LikedPub()
+    else: 
+        action = UserAction_GotSuggestion()
     action.pub = get_object_or_404(Pub, pk=pub_id)
     action.user = request.user.pubuser_set.all()[0]
     action.ip = request.META['REMOTE_ADDR']
