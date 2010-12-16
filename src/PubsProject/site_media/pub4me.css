@@ -55,6 +55,12 @@ h1 {
 	display: none;
 }
 
+.notify {
+	display: none;
+	clear: left;
+	float: left;
+}
+
 .primary {
 	widht: 200px;
 	display: block;

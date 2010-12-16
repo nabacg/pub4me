@@ -40,8 +40,9 @@
 					{% for form in formset.forms %}	
 					<div class="pub_field">	
 						{% for field in form %} 
-	            {{ field }}
-						{% endfor %}												
+	            {{ field }}							
+						{% endfor %}
+						<div class="notify">New place!</div>																
 					</div>													
 	       {% endfor %}
 				 <a href="/pub_recommend" class="primary" rel="pubs_form">Poka wyniki!</a>				 

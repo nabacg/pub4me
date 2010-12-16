@@ -1,5 +1,7 @@
 $(function() {
 	
+	var $div;
+	
 	$('form.pubs div').formset({
 		addText: '+ dodaj kolejną',
 		addCssClass: 'addformlink',
@@ -19,8 +21,21 @@ $(function() {
     });
 	
 	$(".autocomplete").autocomplete({
-        source: "pub_autocomplete",
+		source: function( request, response ) {
+			$.getJSON( "pub_autocomplete", 
+				request, 
+				function(data){
+					response(data);
+					if (data.length == 0) {
+						$('.notify').show();
+					}
+				}
+			);
+		},
 		minLength: 2,
+		search: function(event, ui) {
+			$div = $(this);
+		},
         select: function(event, ui){
 			var nameInputId = $(this).attr("id");
 			var idInputId = nameInputId.replace("name", "id");
