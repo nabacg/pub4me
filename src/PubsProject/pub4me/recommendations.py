@@ -145,7 +145,7 @@ def get_recommended_pubs(user, user_ratings, pub_match_list, n = 10):
         for (similarity, match_pub) in pub_match_list[pub]:
             
             #if this pub was selected, leave it alone
-            #if match_pub in user_ratings: continue
+            if match_pub in user_ratings: continue
             
             scores.setdefault(match_pub, 0)
             #czyli wyliczamy iloczyn tego jak nam sie podobal dany PUB oraz tego jak bardzo MATCH_PUB jest do niego podobny
