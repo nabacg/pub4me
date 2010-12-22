@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from math import sqrt
 from django.core.cache import cache
 
-
+# pobiera liste wszystkich wybranych przez usera pub'ow
+# ustawia im ocene na 1 i porownuje z lista zcache'owanych ocen innych uzytkownikow
 def get_top_matches(pub_user):
 	user = pub_user.user
 	liked_pubs = {}
@@ -11,16 +12,56 @@ def get_top_matches(pub_user):
 		liked_pubs[pub.pub.name] = 1
 	return get_recommended_pubs(user.username, liked_pubs, get_pub_matches_data_set(), 5)
 
-
+# sprawdza czy jest w cache'u lista pubow podobnych do danego pubu
+# wg ocen dotychczasowych uzytkownikow
+# jezeli jest to pobieramy ja i zwracamy, jezeli nie to tworzymy nowa
 def get_pub_matches_data_set():
-	# no i ten wynik moznaby gdzies zapisac i go pobrac zamiast obliczac od nowa, bo jest zupelnie statyczny
-	# jak w django wrzucic slownik, slownikow do bazy
 	pub_ratings = cache.get('pub_ratings', None) # returns None if empty or expired
 	if pub_ratings == None:
 		pub_ratings = calculate_similar_pubs(get_pub_rating(), n=5)
 		cache.set('pub_ratings', pub_ratings)
 	return pub_ratings
 
+
+#user ratings prefs[username]
+#pub_match_list => pub oriented best matches for each pub
+# user_ratings => puby ktore lubi user {nazwa_pubu: 1 }
+# pub_match_list => lista pubow oraz n najbardziej podobnych do danego pubu {pub_name: [ (similarity1, pub1), (similarity2, pub2), itp]}
+def get_recommended_pubs(user, user_ratings, pub_match_list, n = 10):
+    scores = {}
+    total_sim = {}
+    
+    #po wszystkich wybranych pubach
+    for (pub, rating) in user_ratings.items():
+        
+        # iterujemy po wszystkich pubach najbardziej przypominjacych ten pub (top matches)
+        for (similarity, match_pub) in pub_match_list[pub]:
+            
+            #jezeli ten pub zostal juz wybrany przez tego user to pomijamy
+            # !!!!!!!!!!!!!!!!!! moze powinnismy to gdzies zapisac??
+            if match_pub in user_ratings: continue
+            
+            scores.setdefault(match_pub, 0)
+            #czyli wyliczamy iloczyn tego jak nam sie podobal dany PUB oraz tego jak bardzo MATCH_PUB jest do niego podobny
+            # zapisujemy pod match_pub
+            scores[match_pub] += similarity*rating
+            
+            total_sim.setdefault(match_pub, 0)
+            #i dla kazdego MATCH_PUB zapisujemy sume jego podobiestw do naszego PUB
+            total_sim[match_pub] += similarity
+            
+    # zapisujemy iloraz iloczynu podobienstwa i tego jak dany pub nam sie podobal dzielonego
+    # przez sume wszystkich podobienstw do tego pubu   
+    rankings = [(score/total_sim[pub], pub) for pub, score in scores.items()]
+    
+    #sortujemy i zwracamy najlepsze wyniki
+    rankings.sort()
+    rankings.reverse()
+    return rankings[0:n]
+
+# tworzy liste wszystkich pub'ow i ich notowan dla kazdego uzytkownika
+# jezeli uztkownik kiedys wybral ten pub to przypisujemy mu 1
+# jezeli nie to 0
 def get_pub_rating():
 	rating = {}
 	for pub in Pub.objects.all():
@@ -68,6 +109,10 @@ def sim_pearson(user1, user2, prefs):
     
     return num/den
 
+# oblicza najbardziej podobne wyniki dla danego obiektu 
+# obliczajac jego oleglosc od wszystkich innych obietkow w kolekcji preferencji uzytkownikow
+# zwraca n najblizszych wynikow (tych o najmniejszej odleglosci, najwyzszej similarityy)
+# pobiera sposob liczenia odleglosci: 
 def top_matches(user, prefs, similarity=sim_pearson, n= 5):
     
     matches = [ (similarity(user, match_user, prefs), match_user) 
@@ -122,8 +167,10 @@ def transform_prefs(prefs):
     
     return result
 
-    
-    #zakladamy ze prefs sa juz Pub oriented tzn wywolania sa z calculate_similar_pubs(transform_prefs(prefs))
+#Buduje liste n najbardziej podobnych pubow do kazdego pubu 
+# i zwraca slownik z najlepszymi dopasowaniami    
+# korzystamy z Euclidesowskiej definicjie odleglosci
+#zakladamy ze prefs sa juz Pub oriented tzn wywolania sa z calculate_similar_pubs(transform_prefs(prefs))
 def calculate_similar_pubs(prefs, n=10):
     result = {}
     
@@ -132,32 +179,3 @@ def calculate_similar_pubs(prefs, n=10):
         result[pub] = scores
     
     return result
-#user ratings prefs[username]
-#pub_match_list => pub oriented best matches for each pub
-def get_recommended_pubs(user, user_ratings, pub_match_list, n = 10):
-    scores = {}
-    total_sim = {}
-    
-    #loop over pubs that user likes
-    for (pub, rating) in user_ratings.items():
-        
-        # loop over best matches for this pub
-        for (similarity, match_pub) in pub_match_list[pub]:
-            
-            #if this pub was selected, leave it alone
-            if match_pub in user_ratings: continue
-            
-            scores.setdefault(match_pub, 0)
-            #czyli wyliczamy iloczyn tego jak nam sie podobal dany PUB oraz tego jak bardzo MATCH_PUB jest do niego podobny
-            # zapisujemy pod match_pub
-            scores[match_pub] += similarity*rating
-            
-            total_sim.setdefault(match_pub, 0)
-            #i dla kazdego MATCH_PUB zapisujemy sume jego podobiestw do naszego PUB
-            total_sim[match_pub] += similarity
-               
-    rankings = [(score/total_sim[pub], pub) for pub, score in scores.items()]
-    
-    rankings.sort()
-    rankings.reverse()
-    return rankings[0:n]
