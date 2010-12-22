@@ -65,6 +65,8 @@ GUEST_USER_AUTO_PASSWORD = 'automatyczne_haslo_goscia_666_*&^$%^%$@#%'
 
 AUTH_PROFILE_MODULE = 'pub4me.PubUser'
 
+
+CACHE_BACKEND = 'locmem://?timeout=6000"'
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -136,6 +138,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'pub4me',
+    'django_extensions',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

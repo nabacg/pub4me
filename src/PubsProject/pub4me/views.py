@@ -5,14 +5,17 @@ from django.utils import simplejson
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from pub4me.models import Pub
-from pub4me.models import PubUser
+from pub4me.models import PubUser, UserAction_LikedPub, UserAction_GotSuggestion
 from pub4me.forms import PubForm
 from users.userfacade import connect_with_facebook, create_and_login
 from django.forms.formsets import formset_factory
 from django.conf import settings
 import urllib
 import cgi
+import time
 from django.utils import simplejson as json
+from django.shortcuts import get_object_or_404
+from pub4me import recommendations
 
 def index(request):
     if not request.user.is_authenticated():
@@ -27,10 +30,39 @@ def index(request):
 
 def pub_recommend(request):
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
+    topPubs = recommendations.get_top_matches(request.user.pubuser_set.all()[0])
     if request.method == "POST":
-        formset = PubFormSet(request.POST)        
-        return HttpResponse("TODO")
+        formset = PubFormSet(request.POST) 
+        
+    pub_id = Pub.objects.all()[4].id    
+    save_user_action(request, pub_id , 'GS')       
+    return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
+    
+def pub_selected(request):
+    pub_id = request.REQUEST['id']
 
+    save_user_action(request, pub_id, 'LP')
+    
+    return HttpResponse(json.dumps({"success": True}))
+
+# to nie jest view,metoda pomocnicza
+# przeniesc gdzei indziej
+
+def save_user_action(request, pub_id, action_type):
+    if action_type == 'LP':
+        action = UserAction_LikedPub()
+    else: 
+        action = UserAction_GotSuggestion()
+    action.pub = get_object_or_404(Pub, pk=pub_id)
+    action.user = request.user.pubuser_set.all()[0]
+    action.ip = request.META['REMOTE_ADDR']
+    action.time = time.ctime()
+    action.browser_info = request.META['REMOTE_ADDR']
+    action.referer = request.path
+    action.languages = request.META['HTTP_ACCEPT_LANGUAGE']
+    action.action_type = action_type
+    action.save()
+    
 def pub_autocomplete(request):
     if request.method == 'GET':
         if request.GET.__contains__('term'):

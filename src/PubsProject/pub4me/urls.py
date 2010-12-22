@@ -11,6 +11,7 @@ urlpatterns = patterns('pub4me.views',
     (r'^all_pubs$', list_detail.object_list, info_dict), #Niepotrzebne - do wywalenia
     (r'^pub_autocomplete$', 'pub_autocomplete'),
     (r'^pub_recommend$', 'pub_recommend'),
+    (r'^pub_selected$', 'pub_selected'),
     (r'^facebook$', 'facebook'),
     # (r'^(?P<poll_id>\d+)/$', 'detail'),
     # (r'^(?P<poll_id>\d+)/results/$', 'results'),
