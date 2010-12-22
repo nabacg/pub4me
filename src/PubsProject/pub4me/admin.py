@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from pub4me.models import Pub
 from pub4me.models import City
 from pub4me.models import PubUser
