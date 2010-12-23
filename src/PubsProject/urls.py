@@ -7,7 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
    
 urlpatterns = patterns('',
-    (r'^backdoor/', include(admin.site.urls)),
+    (r'^backstage/', include(admin.site.urls)),
     (r'^', include('users.urls')),
     (r'^', include('pub4me.urls')),
     #(r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'site_media').replace('\\','/')})
