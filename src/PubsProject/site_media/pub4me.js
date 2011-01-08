@@ -5,6 +5,7 @@ jQuery.fn.myautocomplete = function() {
 			$.getJSON( "pub_autocomplete", request, function(data){					
 				response(data);
 				if (data.length == 0) $div.find('.notify').show();
+					
 				if (data.length > 0) $div.find('.notify').hide();
 			});
 		},
@@ -12,11 +13,7 @@ jQuery.fn.myautocomplete = function() {
 		search: function(event, ui) {			
 			$div = $(this).parent();
 		},
-	    select: function(event, ui){
-			var nameInputId = $(this).attr("id");
-			var idInputId = nameInputId.replace("name", "id");
-			$("#"+idInputId).val(ui.item.id);
-	    }
+	    select: pubSelect
 	});
 };
 var pubSelect = function (event, ui) {
@@ -39,20 +36,12 @@ $(function() {
 		addCssClass: 'addformlink',
 		deleteCssClass: 'removeformlink',
 		added: function (row) {
-		row.find(".autocomplete").autocomplete({
-			source: "pub_autocomplete",
-			minLength: 2,
-			select: pubSelect
-		});	
-		row.find(".autocomplete").autocomplete("enable");
+			$(".autocomplete").myautocomplete();	
+			row.find(".autocomplete").autocomplete("enable");
 		}
     });
 	
-	$(".autocomplete").autocomplete({
-        source: "pub_autocomplete",
-		minLength: 2,
-        select: pubSelect
-    });
+	$(".autocomplete").myautocomplete();
 
 	$(".primary").click(function(){
 		$("form#"+$(this).attr("rel")).submit();
