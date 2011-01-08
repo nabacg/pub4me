@@ -78,6 +78,10 @@ def pub_autocomplete(request):
     err_msg = "Unable to find Pub 4 you.."
     return HttpResponse(simplejson.dumps({"err_msg": err_msg}))
 
+def facebook_canvas(request):
+    redirect_link = "http://" + request.get_host() + '/facebook'
+    return render_to_response('pub4me/facebook_canvas.html', {'redirect_link': redirect_link})
+
 def facebook(request):
     if request.method == 'GET':
         this_url = "http://" + request.get_host() + request.path

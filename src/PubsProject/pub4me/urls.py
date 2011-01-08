@@ -13,6 +13,7 @@ urlpatterns = patterns('pub4me.views',
     (r'^pub_recommend$', 'pub_recommend'),
     (r'^pub_selected$', 'pub_selected'),
     (r'^facebook$', 'facebook'),
+    (r'^facebook_canvas$', 'facebook_canvas'),
     # (r'^(?P<poll_id>\d+)/$', 'detail'),
     # (r'^(?P<poll_id>\d+)/results/$', 'results'),
     # (r'^(?P<poll_id>\d+)/vote/$', 'vote')
