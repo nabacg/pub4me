@@ -18,8 +18,14 @@ def get_top_matches(pub_user):
 def get_pub_matches_data_set():
 	pub_ratings = cache.get('pub_ratings', None) # returns None if empty or expired
 	if pub_ratings == None:
-		pub_ratings = calculate_similar_pubs(get_pub_rating(), n=5)
-		cache.set('pub_ratings', pub_ratings)
+		refresh_cache()
+		#pub_ratings = calculate_similar_pubs(get_pub_rating(), n=5)
+		#cache.set('pub_ratings', pub_ratings)
+	return pub_ratings
+
+def refresh_cache():
+	pub_ratings = calculate_similar_pubs(get_pub_rating(), n=5)
+	cache.set('pub_ratings', pub_ratings)
 	return pub_ratings
 
 
@@ -116,10 +122,10 @@ def sim_pearson(user1, user2, prefs):
 # obliczajac jego oleglosc od wszystkich innych obietkow w kolekcji preferencji uzytkownikow
 # zwraca n najblizszych wynikow (tych o najmniejszej odleglosci, najwyzszej similarityy)
 # pobiera sposob liczenia odleglosci: 
-def top_matches(user, prefs, similarity=sim_pearson, n= 5):
+def top_matches(pub_liked_by, prefs, similarity=sim_pearson, n= 5):
     
-    matches = [ (similarity(user, match_user, prefs), match_user) 
-               for match_user in prefs.keys() if match_user != user]
+    matches = [ (similarity(pub_liked_by, pub, prefs), pub) 
+               for pub in prefs.keys() if pub != pub_liked_by]
     
     matches.sort()
     matches.reverse()

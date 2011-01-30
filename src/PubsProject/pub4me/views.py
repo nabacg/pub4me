@@ -28,6 +28,10 @@ def index(request):
     username = PubUser.objects.get(user=request.user.id).nice_name()
     return render_to_response('pub4me/index.html', {"user_name": username, "formset": formset}, context_instance=RequestContext(request))
 
+# wymusza odswiezenie cache
+def refresh_cache(request):
+    return HttpResponse(json.dumps(recommendations.refresh_cache()))
+    
 def pub_recommend(request):
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
     topPubs = recommendations.get_top_matches(request.user.pubuser_set.all()[0])
