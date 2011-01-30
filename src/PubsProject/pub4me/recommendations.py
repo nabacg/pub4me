@@ -73,6 +73,9 @@ def get_pub_rating():
 		for rated_pub in pub.useraction_likedpub_set.all():
 			rating[pub.name][rated_pub.user.user.username] = 1
 	
+#		for rated_pub in pub.useraction_likedpub_set.all():
+#			rating[pub.name][rated_pub.user.user.username] = 2
+			
 	return rating
 		
 def rate_pub(username, pub, liked_pubs, ratings):

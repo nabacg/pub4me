@@ -34,8 +34,10 @@ def pub_recommend(request):
     if request.method == "POST":
         formset = PubFormSet(request.POST) 
         
-    pub_id = Pub.objects.all()[4].id    
-    save_user_action(request, pub_id , 'GS')       
+    #pub_id = Pub.objects.all()[4].id    
+    for ranking, pub in topPubs:
+        pub_id = Pub.objects.get(name = pub).id
+        save_user_action(request, pub_id , 'GS')       
     return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
     
 def pub_selected(request):
