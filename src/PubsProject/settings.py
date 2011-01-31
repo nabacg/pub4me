@@ -21,6 +21,8 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )
 
+#TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 MANAGERS = ADMINS
 '''
 DATABASES = {
@@ -33,7 +35,7 @@ DATABASES = {
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -42,6 +44,17 @@ DATABASES = {
         'PASSWORD': 'czesio',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+#MEGITEAM 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'pg_4231',  # Or path to database file if using sqlite3.
+        'USER': 'pg_4231u',                      # Not used with sqlite3.
+        'PASSWORD': 'czesio',                  # Not used with sqlite3.
+        'HOST': 'sql.gmc.megiteam.pl',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5435',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 '''
@@ -55,7 +68,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-'''
+
 
 # Integracja z Facebookiem
 FACEBOOK_APP_ID = '153211921382271'
@@ -66,7 +79,7 @@ GUEST_USER_AUTO_PASSWORD = 'automatyczne_haslo_goscia_666_*&^$%^%$@#%'
 AUTH_PROFILE_MODULE = 'pub4me.PubUser'
 
 
-CACHE_BACKEND = 'locmem://?timeout=6000"'
+CACHE_BACKEND = 'locmem://?timeout=6"'
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

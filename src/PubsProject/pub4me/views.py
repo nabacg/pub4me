@@ -28,14 +28,28 @@ def index(request):
     username = PubUser.objects.get(user=request.user.id).nice_name()
     return render_to_response('pub4me/index.html', {"user_name": username, "formset": formset}, context_instance=RequestContext(request))
 
+# wymusza odswiezenie cache
+def refresh_cache(request):
+    return HttpResponse(json.dumps(recommendations.refresh_cache()))
+    
 def pub_recommend(request):
     PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
-    topPubs = recommendations.get_top_matches(request.user.pubuser_set.all()[0])
+    
     if request.method == "POST":
-        formset = PubFormSet(request.POST) 
-        
-    pub_id = Pub.objects.all()[4].id    
-    save_user_action(request, pub_id , 'GS')       
+        #formset = PubFormSet(request.GET) 
+        selected_pubs = {}
+        data =  request.POST
+        for field in data.keys():
+            pub_name = data[field].split('-')
+            pub_name = "-".join(pub_name[0:-1]).strip()
+            if pub_name != "":
+                selected_pubs[pub_name] = 1
+    print selected_pubs
+    topPubs = recommendations.get_top_matches(selected_pubs)#request.user.pubuser_set.all()[0])
+    #pub_id = Pub.objects.all()[4].id    
+    for ranking, pub in topPubs:
+        pub_id = Pub.objects.get(name = pub).id
+        save_user_action(request, pub_id , 'GS')       
     return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
     
 def pub_selected(request):
