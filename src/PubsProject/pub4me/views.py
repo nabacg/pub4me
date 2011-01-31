@@ -41,7 +41,7 @@ def pub_recommend(request):
         data =  request.POST
         for field in data.keys():
             pub_name = data[field].split('-')
-            pub_name = unicode("-".join(pub_name[0:-1]).strip())
+            pub_name = "-".join(pub_name[0:-1]).strip()
             if pub_name != "":
                 selected_pubs[pub_name] = 1
     print selected_pubs
