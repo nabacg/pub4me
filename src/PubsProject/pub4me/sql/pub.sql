@@ -1,4 +1,4 @@
--- jeden rekord wprawdzie z innego modelu, ale musze miec pewnosc, ze ten rekord juz istnieje przy wypelnianiu tabelki z pubami. 
+﻿-- jeden rekord wprawdzie z innego modelu, ale musze miec pewnosc, ze ten rekord juz istnieje przy wypelnianiu tabelki z pubami. 
 INSERT INTO pub4me_city (id, pl_name, en_name) VALUES ('CRACOW', 'Kraków', 'Cracow');
 
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (1, 'Siesta Cafe', 'ul. Stolarska 6', 'CRACOW', 47);
@@ -97,7 +97,7 @@ INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (94, 'Przychodnia Towarzyska - Rewolucja', 'ul. Szewska 23', 'CRACOW', 274);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (95, 'Ministerstwo Klub Muzyczny', 'ul. Szpitalna 1', 'CRACOW', 223);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (96, 'Mleczarnia', 'ul. Meiselsa 20', 'CRACOW', 140);
-INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (97, 'Jazz Faust Cafe ', 'ul. Szewska 21', 'CRACOW', 358);
+INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (97, 'Jazz Faust Cafe', 'ul. Szewska 21', 'CRACOW', 358);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (98, 'JazzRock Cafe', 'ul. Sławkowska 12', 'CRACOW', 53);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (99, 'Ptaszyl', 'ul. Szeroka 10', 'CRACOW', 137);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk) VALUES (100, 'Pub Galaktyka', 'ul. Pachońskiego 8', 'CRACOW', 350);
