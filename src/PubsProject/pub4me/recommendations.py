@@ -5,12 +5,13 @@ from django.core.cache import cache
 
 # pobiera liste wszystkich wybranych przez usera pub'ow
 # ustawia im ocene na 1 i porownuje z lista zcache'owanych ocen innych uzytkownikow
-def get_top_matches(pub_user):
-	user = pub_user.user
-	liked_pubs = {}
-	for pub in UserAction_LikedPub.objects.filter(user = pub_user):
-		liked_pubs[pub.pub.name] = 1
-	return get_recommended_pubs(user.username, liked_pubs, get_pub_matches_data_set(), 5)
+def get_top_matches( liked_pubs):
+#	user = pub_user.user
+#	liked_pubs = {}
+#	for pub in UserAction_LikedPub.objects.filter(user = pub_user):
+#		liked_pubs[pub.pub.name] = 1
+
+	return get_recommended_pubs(liked_pubs, get_pub_matches_data_set(), 5)
 
 # sprawdza czy jest w cache'u lista pubow podobnych do danego pubu
 # wg ocen dotychczasowych uzytkownikow
@@ -18,7 +19,7 @@ def get_top_matches(pub_user):
 def get_pub_matches_data_set():
 	pub_ratings = cache.get('pub_ratings', None) # returns None if empty or expired
 	if pub_ratings == None:
-		refresh_cache()
+		pub_ratings = refresh_cache()
 		#pub_ratings = calculate_similar_pubs(get_pub_rating(), n=5)
 		#cache.set('pub_ratings', pub_ratings)
 	return pub_ratings
@@ -33,7 +34,7 @@ def refresh_cache():
 #pub_match_list => pub oriented best matches for each pub
 # user_ratings => puby ktore lubi user {nazwa_pubu: 1 }
 # pub_match_list => lista pubow oraz n najbardziej podobnych do danego pubu {pub_name: [ (similarity1, pub1), (similarity2, pub2), itp]}
-def get_recommended_pubs(user, user_ratings, pub_match_list, n = 10):
+def get_recommended_pubs(user_ratings, pub_match_list, n = 10):
     scores = {}
     total_sim = {}
     
@@ -96,6 +97,7 @@ def rate_pub(username, pub, liked_pubs, ratings):
 def sim_distance(user1, user2, prefs):
     sum_of_pow = sum([pow(prefs[user1][item] - prefs[user2][item], 2)
                       for item in prefs[user1] if item in prefs[user2]])
+    if sum_of_pow == 0: return 0
     return 1.0/(1 + sum_of_pow)
 
 def sim_pearson(user1, user2, prefs):
@@ -182,9 +184,9 @@ def transform_prefs(prefs):
 #zakladamy ze prefs sa juz Pub oriented tzn wywolania sa z calculate_similar_pubs(transform_prefs(prefs))
 def calculate_similar_pubs(prefs, n=10):
     result = {}
-    
     for pub in prefs:
         scores = top_matches(pub, prefs, n=n, similarity=sim_distance)
         result[pub] = scores
-    
     return result
+   
+
