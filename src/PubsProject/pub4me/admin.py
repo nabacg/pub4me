@@ -7,7 +7,7 @@ from pub4me.models import UserAction
 class PubAdmin(admin.ModelAdmin):
     list_display = ('name', 'location', 'city', 'ext_service_id_kk', 'active')
     list_filter = ('active', 'city')
-    search_fields = ['name', 'location', 'city']
+    search_fields = ['name', 'location', 'city__pl_name']
 admin.site.register(Pub, PubAdmin)
 
 class CityAdmin(admin.ModelAdmin):
