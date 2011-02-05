@@ -40,7 +40,7 @@ def pub_create(request):
         result = True
     return HttpResponse(json.dumps({"success": result}))
 
-# wymusza odswiezenie cache
+# wymusza odswiezenie cache, do wywolywania recznego przez HTTP
 def refresh_cache(request):
     return HttpResponse(json.dumps(recommendations.refresh_cache()))
     
