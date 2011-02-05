@@ -57,6 +57,17 @@ DATABASES = {
         'PORT': '5435',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+# baza testowa megiteam
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'pg_4620',  # Or path to database file if using sqlite3.
+        'USER': 'pg_4620u',                      # Not used with sqlite3.
+        'PASSWORD': 'czesio',                  # Not used with sqlite3.
+        'HOST': 'sql.gmc.megiteam.pl',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5435',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
 '''
 DATABASES = {
     'default': {
