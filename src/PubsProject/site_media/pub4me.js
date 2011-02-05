@@ -5,7 +5,7 @@ jQuery.fn.myautocomplete = function() {
 			$.getJSON( "pub_autocomplete", request, function(data){					
 				response(data);
 				if (data.length == 0){ 
-					pubCreate(request.term);
+					//pubCreate(request.term);
 					$div.find('.notify').show();
 				}
 				if (data.length > 0) $div.find('.notify').hide();
@@ -32,6 +32,8 @@ var pubCreate = function (pubName) {
 }
 
 var pubSelect = function (event, ui) {
+		var inputElement = $(this);
+		inputElement.attr('pubSelected', 'true');
 		var nameInputId = $(this).attr("id");
 		var idInputId = nameInputId.replace("name", "id");
 		$("#"+idInputId).val(ui.item.id);
@@ -58,6 +60,14 @@ $(function() {
     });
 	
 	$(".autocomplete").myautocomplete();
+	$(".autocomplete").blur(function(e){
+		var searchInput = $(this),
+		searchValue = searchInput.val();
+		
+		if (searchValue && !searchInput.attr('pubSelected') && searchValue != ''){
+			pubCreate(searchInput.val());
+		}
+	});
 
 	$(".primary").click(function(){
 		$("form#"+$(this).attr("rel")).submit();
