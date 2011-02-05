@@ -5,7 +5,9 @@ from pub4me.models import PubUser
 from pub4me.models import UserAction
 
 class PubAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location', 'city', 'ext_service_id_kk')
+    list_display = ('name', 'location', 'city', 'ext_service_id_kk', 'active')
+    list_filter = ('active', 'city')
+    search_fields = ['name', 'location', 'city']
 admin.site.register(Pub, PubAdmin)
 
 class CityAdmin(admin.ModelAdmin):
@@ -20,3 +22,4 @@ class UserActionAdmin(admin.ModelAdmin):
     list_display = ('time', 'user', 'action_type')
     list_display_links = ('action_type', 'time')
 admin.site.register(UserAction, UserActionAdmin)
+
