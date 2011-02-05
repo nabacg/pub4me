@@ -56,7 +56,6 @@ def pub_recommend(request):
             pub_name = "-".join(pub_name[0:-1]).strip()
             if pub_name != "":
                 selected_pubs[pub_name] = 1
-    print selected_pubs
     topPubs = recommendations.get_top_matches(selected_pubs)
     for ranking, pub in topPubs:
         pub_id = Pub.objects.filter(active = True).get(name = pub).id

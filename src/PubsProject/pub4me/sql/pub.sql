@@ -97,7 +97,7 @@ INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) 
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (94, 'Przychodnia Towarzyska - Rewolucja', 'ul. Szewska 23', 'CRACOW', 274, true);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (95, 'Ministerstwo Klub Muzyczny', 'ul. Szpitalna 1', 'CRACOW', 223, true);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (96, 'Mleczarnia', 'ul. Meiselsa 20', 'CRACOW', 140, true);
-INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (97, 'Jazz Faust Cafe ', 'ul. Szewska 21', 'CRACOW', 358, true);
+INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (97, 'Jazz Faust Cafe', 'ul. Szewska 21', 'CRACOW', 358, true);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (98, 'JazzRock Cafe', 'ul. Sławkowska 12', 'CRACOW', 53, true);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (99, 'Ptaszyl', 'ul. Szeroka 10', 'CRACOW', 137, true);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (100, 'Pub Galaktyka', 'ul. Pachońskiego 8', 'CRACOW', 350, true);
