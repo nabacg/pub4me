@@ -168,3 +168,7 @@ INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) 
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (165, 'Coltrane Restaurant & Music Bar', 'ul. Biskupia 4', 'CRACOW', 338, true);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (166, 'Cudowne lata', 'ul. Karmelicka 43', 'CRACOW', 212, true);
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (167, 'Czasem trzeba', 'ul. Mikolajska 14', 'CRACOW', 202, true);
+
+-- poniewaz robienie takiej kaszany jak ten skrypt (zamiast uzywania modeli Django) potrafi rozpieprzyc postgresowa sekwencje dla tej tabeli dlatego ustawiamy ja 
+-- na poprawny nastepny Id
+select setval('pub4me_pub_id_seq', 168);
