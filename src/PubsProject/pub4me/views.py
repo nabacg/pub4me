@@ -28,6 +28,18 @@ def index(request):
     username = PubUser.objects.get(user=request.user.id).nice_name()
     return render_to_response('pub4me/index.html', {"user_name": username, "formset": formset}, context_instance=RequestContext(request))
 
+def pub_create(request):
+    result = False
+    if request.method == "POST" :
+        params = request.POST
+    else:
+        params = request.GET
+    if params.get('name', None) != None:
+        pub_name = params['name']
+        Pub.objects.create(name = pub_name, active = False)
+        result = True
+    return HttpResponse(json.dumps({"success": result}))
+
 # wymusza odswiezenie cache
 def refresh_cache(request):
     return HttpResponse(json.dumps(recommendations.refresh_cache()))
@@ -45,10 +57,9 @@ def pub_recommend(request):
             if pub_name != "":
                 selected_pubs[pub_name] = 1
     print selected_pubs
-    topPubs = recommendations.get_top_matches(selected_pubs)#request.user.pubuser_set.all()[0])
-    #pub_id = Pub.objects.all()[4].id    
+    topPubs = recommendations.get_top_matches(selected_pubs)
     for ranking, pub in topPubs:
-        pub_id = Pub.objects.get(name = pub).id
+        pub_id = Pub.objects.filter(active = True).get(name = pub).id
         save_user_action(request, pub_id , 'GS')       
     return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
     
@@ -81,7 +92,7 @@ def pub_autocomplete(request):
     if request.method == 'GET':
         if request.GET.__contains__('term'):
             term = request.GET.__getitem__('term')
-            query_result = Pub.objects.filter(name__icontains=term)[:10]
+            query_result = Pub.objects.filter(active = True).filter(name__icontains=term)[:10]
             
             json_data = simplejson.dumps(map(lambda r : {
                     "id": r.pk,

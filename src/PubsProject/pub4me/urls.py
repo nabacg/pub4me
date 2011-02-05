@@ -3,7 +3,7 @@ from django.views.generic import list_detail
 from pub4me.models import Pub
 
 info_dict = {
-    'queryset': Pub.objects.all(),
+    'queryset': Pub.objects.filter(active = True),
 }
 
 urlpatterns = patterns('pub4me.views',
@@ -12,6 +12,7 @@ urlpatterns = patterns('pub4me.views',
     (r'^pub_autocomplete$', 'pub_autocomplete'),
     (r'^pub_recommend$', 'pub_recommend'),
     (r'^pub_selected$', 'pub_selected'),
+    (r'^pub_create$', 'pub_create'),
     (r'^facebook$', 'facebook'),
     (r'^facebook_canvas$', 'facebook_canvas'),
     (r'^refresh_cache$', 'refresh_cache'),

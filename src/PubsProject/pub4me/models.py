@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
- 
+from django.conf import settings
+
 class City(models.Model):
     id = models.CharField(max_length=50, primary_key=True)
     pl_name = models.CharField(max_length=100)
@@ -13,8 +14,9 @@ class Pub(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
     location = models.CharField(max_length=200)
-    city = models.ForeignKey(City)
-    ext_service_id_kk = models.BigIntegerField() # ID knajpy z serwisu zewnetrzego (knajpy.krakow.pl)
+    city = models.ForeignKey(City, default = settings.DEFAULT_CITY_ID)
+    active = models.BooleanField(default = True)
+    ext_service_id_kk = models.BigIntegerField(default = settings.DEFAULT_EXT_SERVICE_ID) # ID knajpy z serwisu zewnetrzego (knajpy.krakow.pl)
     def __unicode__(self):
         return self.name
 

@@ -4,8 +4,10 @@ jQuery.fn.myautocomplete = function() {
 		source: function( request, response ) {
 			$.getJSON( "pub_autocomplete", request, function(data){					
 				response(data);
-				if (data.length == 0) $div.find('.notify').show();
-					
+				if (data.length == 0){ 
+					pubCreate(request.term);
+					$div.find('.notify').show();
+				}
 				if (data.length > 0) $div.find('.notify').hide();
 			});
 		},
@@ -16,6 +18,18 @@ jQuery.fn.myautocomplete = function() {
 	    select: pubSelect
 	});
 };
+var pubCreate = function (pubName) {
+		$.ajax({
+				type: "POST",
+				url: 'pub_create',
+				data: {name: pubName},
+				success: function(data){
+					$div.find('.notify').show();
+					console.log('yay!');	
+				}
+			});
+}
+
 var pubSelect = function (event, ui) {
 		var nameInputId = $(this).attr("id");
 		var idInputId = nameInputId.replace("name", "id");
@@ -29,6 +43,7 @@ var pubSelect = function (event, ui) {
 				}
 			});
 	}
+	
 
 $(function() {	
 	$('form.pubs div.pub_field').formset({

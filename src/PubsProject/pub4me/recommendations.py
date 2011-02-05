@@ -71,7 +71,7 @@ def get_recommended_pubs(user_ratings, pub_match_list, n = 10):
 # jezeli nie to 0
 def get_pub_rating():
 	rating = {}
-	for pub in Pub.objects.all():
+	for pub in Pub.objects.filter(active = True):
 		rating.setdefault(pub.name, {})
 #TODO zoptymalizowac bo to troche rozrzutne	
 		for user in User.objects.all():

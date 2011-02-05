@@ -78,6 +78,9 @@ GUEST_USER_AUTO_PASSWORD = 'automatyczne_haslo_goscia_666_*&^$%^%$@#%'
 
 AUTH_PROFILE_MODULE = 'pub4me.PubUser'
 
+#potrzebne do tworzenia knajp
+DEFAULT_CITY_ID = 'CRACOW'
+DEFAULT_EXT_SERVICE_ID = -11
 
 CACHE_BACKEND = 'locmem://?timeout=6"'
 # Local time zone for this installation. Choices can be found here:
