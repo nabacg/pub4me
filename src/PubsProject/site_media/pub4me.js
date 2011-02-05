@@ -18,6 +18,7 @@ jQuery.fn.myautocomplete = function() {
 	    select: pubSelect
 	});
 };
+//zapisuje nowa, nieaktywna knajpe o nazwie pubName i domyslnych parametrach
 var pubCreate = function (pubName) {
 		$.ajax({
 				type: "POST",
