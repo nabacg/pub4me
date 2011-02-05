@@ -47,6 +47,15 @@ var pubSelect = function (event, ui) {
 			});
 	}
 	
+var onblurHandler = function (e) {
+		var searchInput = $(this),
+		searchValue = searchInput.val();
+		
+		if (searchValue && !searchInput.attr('pubSelected') && searchValue != ''){
+			pubCreate(searchInput.val());
+		}
+	}
+	
 
 $(function() {	
 	$('form.pubs div.pub_field').formset({
@@ -55,19 +64,13 @@ $(function() {
 		deleteCssClass: 'removeformlink',
 		added: function (row) {
 			$(".autocomplete").myautocomplete();	
+			$(".autocomplete").blur(onblurHandler);
 			row.find(".autocomplete").autocomplete("enable");
 		}
     });
 	
 	$(".autocomplete").myautocomplete();
-	$(".autocomplete").blur(function(e){
-		var searchInput = $(this),
-		searchValue = searchInput.val();
-		
-		if (searchValue && !searchInput.attr('pubSelected') && searchValue != ''){
-			pubCreate(searchInput.val());
-		}
-	});
+	$(".autocomplete").blur(onblurHandler);
 
 	$(".primary").click(function(){
 		$("form#"+$(this).attr("rel")).submit();

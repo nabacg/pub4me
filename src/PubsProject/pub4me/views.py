@@ -36,7 +36,7 @@ def pub_create(request):
         params = request.GET
     if params.get('name', None) != None:
         pub_name = params['name']
-        Pub.objects.create(name = pub_name, active = False)
+        Pub.objects.get_or_create(name = pub_name, active = False)
         result = True
     return HttpResponse(json.dumps({"success": result}))
 
