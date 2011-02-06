@@ -172,3 +172,4 @@ INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) 
 -- poniewaz robienie takiej kaszany jak ten skrypt (zamiast uzywania modeli Django) potrafi rozpieprzyc postgresowa sekwencje dla tej tabeli dlatego ustawiamy ja 
 -- na poprawny nastepny Id
 select setval('pub4me_pub_id_seq', 168);
+-- robienie takiego paskudnego workaroundu jest jeszcze przydsze. Proponuje z komendy INSERT INTO wywalic ID, tak zeby baza sama inkrementowala licznik.

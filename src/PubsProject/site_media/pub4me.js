@@ -25,7 +25,6 @@ var pubCreate = function (pubName) {
 				url: 'pub_create',
 				data: {name: pubName},
 				success: function(data){
-					$div.find('.notify').show();
 					console.log('yay!');	
 				}
 			});
@@ -45,6 +44,7 @@ var pubSelect = function (event, ui) {
 					console.log('yay!');	
 				}
 			});
+		addNewRow();
 	}
 	
 var onblurHandler = function (e) {
@@ -56,22 +56,35 @@ var onblurHandler = function (e) {
 		}
 	}
 	
+var onKeyPressHandler = function(key){
+	if(key.which == 13) addNewRow();
+}
 
+//dodaje nowy input do wybrania knajpy
+var addNewRow = function(){
+	$(".addformlink").click();
+} 
+		
+var registerAutocompleteHandlers = function(){
+	$(".autocomplete").myautocomplete();
+	$(".autocomplete").blur(onblurHandler);
+	$(".autocomplete").keypress(onKeyPressHandler);
+}
+		
 $(function() {	
 	$('form.pubs div.pub_field').formset({
 		addText: '+ dodaj kolejną',
 		addCssClass: 'addformlink',
 		deleteCssClass: 'removeformlink',
 		added: function (row) {
-			$(".autocomplete").myautocomplete();	
-			$(".autocomplete").blur(onblurHandler);
+			registerAutocompleteHandlers();
 			row.find(".autocomplete").autocomplete("enable");
+			row.find(".autocomplete").focus();
 		}
     });
 	
-	$(".autocomplete").myautocomplete();
-	$(".autocomplete").blur(onblurHandler);
-
+	registerAutocompleteHandlers();
+	
 	$(".primary").click(function(){
 		$("form#"+$(this).attr("rel")).submit();
 		return false;
