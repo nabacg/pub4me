@@ -35,7 +35,7 @@ DATABASES = {
         'PORT': '5432',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -46,6 +46,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+'''
 #MEGITEAM pierwsza baza na megiteam, aktualnie nieuzywana
 DATABASES = {
     'default': {
@@ -68,7 +69,7 @@ DATABASES = {
         'PORT': '5435',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -79,7 +80,7 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-
+'''
 
 # Integracja z Facebookiem
 FACEBOOK_APP_ID = '153211921382271'
