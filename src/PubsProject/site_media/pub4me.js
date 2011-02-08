@@ -25,7 +25,7 @@ var pubCreate = function (pubName) {
 				url: 'pub_create',
 				data: {name: pubName},
 				success: function(data){
-					console.log('yay!');	
+					//console.log('yay!');	
 				}
 			});
 }
@@ -41,10 +41,15 @@ var pubSelect = function (event, ui) {
 				url: 'pub_selected',
 				data: ui.item,
 				success: function(data){
-					console.log('yay!');	
+					//console.log('yay!');	
 				}
 			});
-		addNewRow();
+		//Jezeli wybrano z listy sugestii w inny sposob niz wcisniecie <ENTER>
+		//to dodajemy input na kolejna knajpe.
+		//Pozostalymi przypadkami (wcisnieto <ENTER>) zajmie sie oddzielna funkcja)
+		//pod IE i tak nie zadziala...
+		if(event.which != 13)
+			addNewRow();
 	}
 	
 var onblurHandler = function (e) {
@@ -55,9 +60,13 @@ var onblurHandler = function (e) {
 			pubCreate(searchInput.val());
 		}
 	}
-	
+
+//Jezeli wcisnieto <ENTER> i tekst wpisany do inputa nie jest pusty, to dodajemy kolejne pole
 var onKeyPressHandler = function(key){
-	if(key.which == 13) addNewRow();
+	if (key.which == 13){
+		if($(this).val() != "")
+			addNewRow();
+	} 
 }
 
 //dodaje nowy input do wybrania knajpy
