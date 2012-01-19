@@ -89,14 +89,13 @@ def save_user_action(request, pub_id, action_type):
     
 def pub_autocomplete(request):
     if request.method == 'GET':
-        if request.GET.__contains__('term'):
-            term = request.GET.__getitem__('term')
+        if request.GET.__contains__('q'):
+            term = request.GET.__getitem__('q')
             query_result = Pub.objects.filter(active = True).filter(name__icontains=term)[:10]
             
             json_data = simplejson.dumps(map(lambda r : {
                     "id": r.pk,
-                    "label": "%s - %s" % (r.name, r.location),
-                    "value": "%s - %s" % (r.name, r.location)},
+                    "name": "%s - %s" % (r.name, r.location)},
                 query_result))
             return HttpResponse(json_data,'application/javascript')
     err_msg = "Unable to find Pub 4 you.."
