@@ -27,7 +27,14 @@
 			$(document).ready(function () {
 			    $("#pubs_input").tokenInput("/pub_autocomplete", {
 			    	onAdd: function (item) {
-			    		alert("Added " + item.id + item.name);
+						$.ajax({
+							type: "POST",
+							url: 'pub_selected',
+							data: item,
+							success: function(data){
+								//console.log('yay!');	
+							}
+						});
 			    	}
 			    });
 			});
