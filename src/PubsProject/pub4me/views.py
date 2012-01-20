@@ -45,10 +45,8 @@ def refresh_cache(request):
     return HttpResponse(json.dumps(recommendations.refresh_cache()))
     
 def pub_recommend(request):
-    PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
     
     if request.method == "POST":
-        #formset = PubFormSet(request.GET) 
         selected_pubs = {}
         data =  request.POST
         for field in data.keys():
