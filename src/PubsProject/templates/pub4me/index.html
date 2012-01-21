@@ -7,8 +7,9 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script> 
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>		
 		<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-  		<link rel="stylesheet" type="text/css" href="/site_media/pub4me.css"/>
+  		<link rel="stylesheet" type="text/css" href="/site_media/main.css"/>
   		<script type="text/javascript" src="/site_media/jquery.tokeninput.js"></script>
+  		<script type="text/javascript" src="/site_media/main.js"></script>
 		<link rel="stylesheet" type="text/css" href="/site_media/token-input.css" />	
 		
 		<script type="text/javascript">
@@ -64,10 +65,11 @@
 				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce.</p>
 				<form id="pubs_form" class="pubs" action="/pub_recommend" method="post">
 					<input type="text" id="pubs_input" name="pubs" />
+					<a id="recommend_submit" href="#" class="primary" rel="pubs_form">Poka wyniki!</a>	
 				</form>
 				
 					
-				 <a href="/pub_recommend" class="primary" rel="pubs_form">Poka wyniki!</a>				 
+				 			 
 				
 				
 				{% endblock %}							
