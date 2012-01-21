@@ -1,23 +1,4 @@
-jQuery.fn.myautocomplete = function() {
-	var $div;
-    $(this).autocomplete({
-		source: function( request, response ) {
-			$.getJSON( "pub_autocomplete", request, function(data){					
-				response(data);
-				if (data.length == 0){ 
-					//pubCreate(request.term);
-					$div.find('.notify').show();
-				}
-				if (data.length > 0) $div.find('.notify').hide();
-			});
-		},
-		minLength: 2,
-		search: function(event, ui) {			
-			$div = $(this).parent();
-		},
-	    select: pubSelect
-	});
-};
+
 //zapisuje nowa, nieaktywna knajpe o nazwie pubName i domyslnych parametrach
 var pubCreate = function (pubName) {
 		$.ajax({
@@ -29,28 +10,6 @@ var pubCreate = function (pubName) {
 				}
 			});
 }
-
-var pubSelect = function (event, ui) {
-		var inputElement = $(this);
-		inputElement.attr('pubSelected', 'true');
-		var nameInputId = $(this).attr("id");
-		var idInputId = nameInputId.replace("name", "id");
-		$("#"+idInputId).val(ui.item.id);
-		$.ajax({
-				type: "POST",
-				url: 'pub_selected',
-				data: ui.item,
-				success: function(data){
-					//console.log('yay!');	
-				}
-			});
-		//Jezeli wybrano z listy sugestii w inny sposob niz wcisniecie <ENTER>
-		//to dodajemy input na kolejna knajpe.
-		//Pozostalymi przypadkami (wcisnieto <ENTER>) zajmie sie oddzielna funkcja)
-		//pod IE i tak nie zadziala...
-		if(event.which != 13)
-			addNewRow();
-	}
 	
 var onblurHandler = function (e) {
 		var searchInput = $(this),
