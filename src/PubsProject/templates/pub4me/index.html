@@ -25,20 +25,53 @@
 		</script>
 		
 		<script type="text/javascript">
+			var csrf_token = '{{ csrf_token }}';
+		
 			$(document).ready(function () {
 			    $("#pubs_input").tokenInput("/pub_autocomplete", {
 			    	onAdd: function (item) {
 						$.ajax({
 							type: "POST",
 							url: 'pub_selected',
-							data: item,
+							data: {
+								pub: item,
+								csrfmiddlewaretoken: csrf_token
+							},
 							success: function(data){
-								//console.log('yay!');	
 							}
 						});
 			    	}
 			    });
+			    
+			   	$("#recommend_submit").click(function(){
+					$("#pubs_form").submit();
+					return false;
+				});
+			    
+			    $("#pubs_form").submit(function(){
+					var recommendList = $("#recommendList");
+					
+					$.ajax({
+						type: "POST",
+						url: "pub_recommend",
+						data: {
+							pubs: $("#pubs_form").serializeArray()[0]['value'],
+							csrfmiddlewaretoken: csrf_token
+						},
+						success: function(data){
+							recommendList.empty();
+							var data = eval('(' + data + ')');
+							for(var i = 0; i < data.length; i++)
+							{
+								var pub = $('<li></li>').text(data[i]);
+								pub.appendTo(recommendList);
+							}				
+						}
+					});
+					return false;
+				});
 			});
+			
 		</script>
 	</head>
 	<body>

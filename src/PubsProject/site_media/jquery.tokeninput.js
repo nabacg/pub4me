@@ -21,8 +21,8 @@ var DEFAULT_SETTINGS = {
     jsonContainer: null,
 
 	// Display settings
-    hintText: "Type in a search term",
-    noResultsText: "No results",
+    hintText: "Type in a place name",
+    noResultsText: "No results. Add this as a new place?",
     searchingText: "Searching...",
     deleteText: "&times;",
     animateDropdown: true,
@@ -484,6 +484,23 @@ $.TokenList = function (input, url_or_data, settings) {
 
         return this_token;
     }
+    
+    // Change input query in token and save into database
+    function save_new_place (query) {
+    	$.ajax({
+				type: "POST",
+				url: 'pub_create',
+				data: {
+					name: query,
+					csrfmiddlewaretoken: csrf_token
+				},
+				success: function(data){
+					return query;
+				}
+		});  
+		return false;  	
+    }
+    
 
     // Add a token to the token list based on user input
     function add_token (item) {
@@ -671,7 +688,7 @@ $.TokenList = function (input, url_or_data, settings) {
                     select_dropdown_item($(event.target).closest("li"));
                 })
                 .mousedown(function (event) {
-                    add_token($(event.target).closest("li").data("tokeninput"));
+                    add_token($(event.target).closest("li").data("tokeninput"));                    
                     hidden_input.change();
                     return false;
                 })
@@ -704,9 +721,23 @@ $.TokenList = function (input, url_or_data, settings) {
             } else {
                 dropdown_ul.show();
             }
-        } else {
-            if(settings.noResultsText) {
-                dropdown.html("<p>"+settings.noResultsText+"</p>");
+        } else {        	
+            if(settings.noResultsText) {          	
+                dropdown.html('<p>'+settings.noResultsText+'</p>')
+                .mouseover(function (event) {
+                	                  
+                })
+                .mousedown(function (event) {
+                	save_new_place(query);
+                	var item = {
+                		id: query,
+                		name: query
+                	};
+                	add_token(item);
+                	hidden_input.change();
+                	return false;
+                })
+                .hide();                
                 show_dropdown();
             }
         }
