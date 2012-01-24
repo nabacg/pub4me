@@ -33,12 +33,11 @@ def pub_create(request):
         params = request.GET
     if params.get('name', None) != None:
         pub_name = params['name']
-        result = Pub.objects.get_or_create(name = pub_name, active = False)
-        json_data = simplejson.dumps(map(lambda r : {
+        r = Pub.objects.get_or_create(name = pub_name, active = False)
+        return HttpResponse(json.dumps({
                     "id": r.pk,
-                    "name": "%s - %s" % (r.name, r.location)},
-               result.object))
-        return HttpResponse(json_data,'application/javascript')
+                    "name": "%s - %s" % (r.name, r.location)},'application/javascript'))
+        
     return HttpResponse(json.dumps({"success": result}))
 
 # wymusza odswiezenie cache, do wywolywania recznego przez HTTP
@@ -46,14 +45,13 @@ def refresh_cache(request):
     return HttpResponse(json.dumps(recommendations.refresh_cache()))
     
 def pub_recommend(request):
+    selected_pubs = {}
     if request.method == "POST":
-        selected_pubs = {}
-        data =  request.POST['pubs']
-        for field in data.keys():
-            pub_name = data[field].split('-')
-            pub_name = "-".join(pub_name[0:-1]).strip()
-            if pub_name != "":
-                selected_pubs[pub_name] = 1
+        data =  map(lambda p: int(p), request.POST['pubs'].split(','))
+        for pub_id in data:
+            pub = Pub.objects.get(pk= pub_id)
+            if pub:
+                selected_pubs[pub.name] = 1
     topPubs = recommendations.get_top_matches(selected_pubs)
     for ranking, pub in topPubs:
         pub_id = Pub.objects.filter(active = True).get(name = pub).id
