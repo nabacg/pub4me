@@ -486,15 +486,18 @@ $.TokenList = function (input, url_or_data, settings) {
     }
     
     // Change input query in token and save into database
-    function save_new_place (query) {
+    function save_new_place (query, item) {
     	$.ajax({
 				type: "POST",
 				url: 'pub_create',
+				dataType: 'json',
 				data: {
 					name: query,
 					csrfmiddlewaretoken: csrf_token
 				},
 				success: function(data){
+					//using closure binded item object to update new pub ID
+					item.id = data.id;
 					return query;
 				}
 		});  
@@ -728,11 +731,12 @@ $.TokenList = function (input, url_or_data, settings) {
                 	                  
                 })
                 .mousedown(function (event) {
-                	save_new_place(query);
+                	
                 	var item = {
                 		id: query,
                 		name: query
                 	};
+                	save_new_place(query, item);
                 	add_token(item);
                 	hidden_input.change();
                 	return false;
