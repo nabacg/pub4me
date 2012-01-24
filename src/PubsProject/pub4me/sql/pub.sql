@@ -1,4 +1,6 @@
 -- jeden rekord wprawdzie z innego modelu, ale musze miec pewnosc, ze ten rekord juz istnieje przy wypelnianiu tabelki z pubami. 
+DELETE FROM pub4me_city WHERE 1;
+DELETE FROM pub4me_pub WHERE 1;
 INSERT INTO pub4me_city (id, pl_name, en_name) VALUES ('CRACOW', 'Kraków', 'Cracow');
 
 INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) VALUES (1, 'Siesta Cafe', 'ul. Stolarska 6', 'CRACOW', 47, 1);
@@ -173,3 +175,4 @@ INSERT INTO pub4me_pub (id, name, location, city_id, ext_service_id_kk, active) 
 -- na poprawny nastepny Id
 -- select setval('pub4me_pub_id_seq', 168);
 -- robienie takiego paskudnego workaroundu jest jeszcze przydsze. Proponuje z komendy INSERT INTO wywalic ID, tak zeby baza sama inkrementowala licznik.
+

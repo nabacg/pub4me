@@ -1,4 +1,5 @@
 from django.template import RequestContext
+from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
@@ -8,7 +9,6 @@ from pub4me.models import Pub
 from pub4me.models import PubUser, UserAction_LikedPub, UserAction_GotSuggestion
 from pub4me.forms import PubForm
 from users.userfacade import connect_with_facebook, create_and_login
-from django.forms.formsets import formset_factory
 from django.conf import settings
 import urllib
 import cgi
@@ -22,11 +22,8 @@ def index(request):
         create_and_login(None, None, request, is_guest = True)
     request.session.set_expiry(60*60*24*365*2)  #sesja wygasnie za 2 lata, 
                                                 #    bo plota glosi ze 10 letnie ciastka nie sa lubiane przez przegladarki :)
-    
-    PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
-    formset = PubFormSet()
     username = PubUser.objects.get(user=request.user.id).nice_name()
-    return render_to_response('pub4me/index.html', {"user_name": username, "formset": formset}, context_instance=RequestContext(request))
+    return render_to_response('pub4me/index.html', {"user_name": username}, context_instance=RequestContext(request))
 
 def pub_create(request):
     result = False
@@ -36,8 +33,12 @@ def pub_create(request):
         params = request.GET
     if params.get('name', None) != None:
         pub_name = params['name']
-        Pub.objects.get_or_create(name = pub_name, active = False)
-        result = True
+        result = Pub.objects.get_or_create(name = pub_name, active = False)
+        json_data = simplejson.dumps(map(lambda r : {
+                    "id": r.pk,
+                    "name": "%s - %s" % (r.name, r.location)},
+               result.object))
+        return HttpResponse(json_data,'application/javascript')
     return HttpResponse(json.dumps({"success": result}))
 
 # wymusza odswiezenie cache, do wywolywania recznego przez HTTP
@@ -45,12 +46,9 @@ def refresh_cache(request):
     return HttpResponse(json.dumps(recommendations.refresh_cache()))
     
 def pub_recommend(request):
-    PubFormSet = formset_factory(PubForm, extra=1, max_num=5)
-    
     if request.method == "POST":
-        #formset = PubFormSet(request.GET) 
         selected_pubs = {}
-        data =  request.POST
+        data =  request.POST['pubs']
         for field in data.keys():
             pub_name = data[field].split('-')
             pub_name = "-".join(pub_name[0:-1]).strip()
@@ -63,10 +61,8 @@ def pub_recommend(request):
     return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
     
 def pub_selected(request):
-    pub_id = request.REQUEST['id']
-
+    pub_id = request.REQUEST['pub[id]']
     save_user_action(request, pub_id, 'LP')
-    
     return HttpResponse(json.dumps({"success": True}))
 
 # to nie jest view,metoda pomocnicza
@@ -89,14 +85,13 @@ def save_user_action(request, pub_id, action_type):
     
 def pub_autocomplete(request):
     if request.method == 'GET':
-        if request.GET.__contains__('term'):
-            term = request.GET.__getitem__('term')
+        if request.GET.__contains__('q'):
+            term = request.GET.__getitem__('q')
             query_result = Pub.objects.filter(active = True).filter(name__icontains=term)[:10]
             
             json_data = simplejson.dumps(map(lambda r : {
                     "id": r.pk,
-                    "label": "%s - %s" % (r.name, r.location),
-                    "value": "%s - %s" % (r.name, r.location)},
+                    "name": "%s - %s" % (r.name, r.location)},
                 query_result))
             return HttpResponse(json_data,'application/javascript')
     err_msg = "Unable to find Pub 4 you.."
