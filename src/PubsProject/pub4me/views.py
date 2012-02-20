@@ -77,10 +77,8 @@ def save_user_action(request, pub, action_type):
         pub_id = int(pub)
         action.pub = get_object_or_404(Pub, pk=pub_id)
     except:
-        try:
-            action.pub = get_object_or_404(Pub, name=pub)
-        except:
-            pass
+        action.pub = get_object_or_404(Pub, name=pub)
+
         
     if action.pub:    
         action.user = request.user.pubuser_set.all()[0]
