@@ -64,7 +64,8 @@ var DEFAULT_CLASSES = {
     dropdownItem: "token-input-dropdown-item",
     dropdownItem2: "token-input-dropdown-item2",
     selectedDropdownItem: "token-input-selected-dropdown-item",
-    inputToken: "token-input-input-token"
+    inputToken: "token-input-input-token",
+    newPlaceAdded: "token-new-place-added"
 };
 
 // Input box position "enum"
@@ -740,6 +741,17 @@ $.TokenList = function (input, url_or_data, settings) {
 	                	};
 	                	save_new_place(query, item);
 	                	add_token(item);
+	                	var found_existing_token = null;
+						token_list.children().each(function () {
+								var existing_token = $(this);
+								var existing_data = $.data(existing_token.get(0), "tokeninput");
+								if(existing_data && existing_data.id === item.id) {
+								found_existing_token = existing_token;
+								return false;
+								}
+						}); 
+						if(found_existing_token)
+	                		found_existing_token.addClass(settings.classes.newPlaceAdded);
 	                	hidden_input.change();
 	                	notHandledYet = false;
                 	}

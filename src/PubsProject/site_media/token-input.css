@@ -112,3 +112,6 @@ div.token-input-dropdown ul li.token-input-selected-dropdown-item {
     background-color: #d0efa0;
 }
 
+li.token-new-place-added {
+	background-color: #9900CC;
+}
