@@ -67,12 +67,18 @@ def pub_selected(request):
 # to nie jest view,metoda pomocnicza
 # przeniesc gdzei indziej
 
-def save_user_action(request, pub_id, action_type):
+def save_user_action(request, pub, action_type):
     if action_type == 'LP':
         action = UserAction_LikedPub()
     else: 
         action = UserAction_GotSuggestion()
-    action.pub = get_object_or_404(Pub, pk=pub_id)
+        
+    try:
+        pub_id = int(pub)
+        action.pub = get_object_or_404(Pub, pk=pub_id)
+    except:
+        action.pub = get_object_or_404(Pub, name=pub)
+        
     action.user = request.user.pubuser_set.all()[0]
     action.ip = request.META['REMOTE_ADDR']
     action.time = time.ctime()

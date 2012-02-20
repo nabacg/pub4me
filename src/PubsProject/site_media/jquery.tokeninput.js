@@ -15,7 +15,7 @@ var DEFAULT_SETTINGS = {
     method: "GET",
     contentType: "json",
     queryParam: "q",
-    searchDelay: 300,
+    searchDelay: 600,
     minChars: 1,
     propertyToSearch: "name",
     jsonContainer: null,
@@ -725,20 +725,24 @@ $.TokenList = function (input, url_or_data, settings) {
                 dropdown_ul.show();
             }
         } else {        	
+        	var notHandledYet = true;
             if(settings.noResultsText) {          	
                 dropdown.html('<p>'+settings.noResultsText+'</p>')
                 .mouseover(function (event) {
                 	                  
                 })
                 .mousedown(function (event) {
-                	
-                	var item = {
-                		id: query,
-                		name: query
-                	};
-                	save_new_place(query, item);
-                	add_token(item);
-                	hidden_input.change();
+                	if(notHandledYet)
+                	{
+	                	var item = {
+	                		id: query,
+	                		name: query
+	                	};
+	                	save_new_place(query, item);
+	                	add_token(item);
+	                	hidden_input.change();
+	                	notHandledYet = false;
+                	}
                 	return false;
                 })
                 .hide();                

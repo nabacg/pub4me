@@ -29,6 +29,7 @@
 			$(document).ready(function () {
 								
 			    $("#pubs_input").tokenInput("/pub_autocomplete", {
+			    	preventDuplicates: true,
 			    	onAdd: function (item) {
 						$.ajax({
 							type: "POST",
