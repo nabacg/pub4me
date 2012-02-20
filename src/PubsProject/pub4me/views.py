@@ -77,16 +77,20 @@ def save_user_action(request, pub, action_type):
         pub_id = int(pub)
         action.pub = get_object_or_404(Pub, pk=pub_id)
     except:
-        action.pub = get_object_or_404(Pub, name=pub)
+        try:
+            action.pub = get_object_or_404(Pub, name=pub)
+        except:
+            pass
         
-    action.user = request.user.pubuser_set.all()[0]
-    action.ip = request.META['REMOTE_ADDR']
-    action.time = time.ctime()
-    action.browser_info = request.META['REMOTE_ADDR']
-    action.referer = request.path
-    action.languages = request.META['HTTP_ACCEPT_LANGUAGE']
-    action.action_type = action_type
-    action.save()
+    if action.pub:    
+        action.user = request.user.pubuser_set.all()[0]
+        action.ip = request.META['REMOTE_ADDR']
+        action.time = time.ctime()
+        action.browser_info = request.META['REMOTE_ADDR']
+        action.referer = request.path
+        action.languages = request.META['HTTP_ACCEPT_LANGUAGE']
+        action.action_type = action_type
+        action.save()
     
 def pub_autocomplete(request):
     if request.method == 'GET':
