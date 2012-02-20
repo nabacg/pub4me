@@ -10,7 +10,7 @@
   		<link rel="stylesheet" type="text/css" href="/site_media/main.css"/>
   		<script type="text/javascript" src="/site_media/jquery.tokeninput.js"></script>
   		<script type="text/javascript" src="/site_media/main.js"></script>
-		<link rel="stylesheet" type="text/css" href="/site_media/token-input.css" />	
+		<link rel="stylesheet" type="text/css" href="/site_media/token-input.css" />
 		
 		<script type="text/javascript">
   			var _gaq = _gaq || [];
@@ -28,6 +28,7 @@
 			var csrf_token = '{{ csrf_token }}';
 		
 			$(document).ready(function () {
+								
 			    $("#pubs_input").tokenInput("/pub_autocomplete", {
 			    	onAdd: function (item) {
 						$.ajax({
@@ -93,12 +94,13 @@
 			<div class="content">
 				{% block main_content %}
 				
-
-				<h1>Nie wiesz gdzie iść wieczorem?</h1>
-				<p>Podaj swoją ulubioną knajpę, a znajdziemy ci Twoje nowe ulubione miejsce.</p>
+				<h1 class="logo"><img src="/site_media/logo.png" alt="mingle. new places to love" /></h1>
+				<h2 class="hint"><img src="/site_media/hint.png" alt="Wpisz miejsca do których chodzisz. Podpowiemy Ci nowe ulubione." /></h2>
+				
 				<form id="pubs_form" class="pubs" action="/pub_recommend" method="post">
-					<input type="text" id="pubs_input" name="pubs" />
-					<a id="recommend_submit" href="#" class="primary" rel="pubs_form">Poka wyniki!</a>	
+					<input type="text" id="pubs_input" name="pubs" placeholder="Wpisz jedno lub kilka miejsce, do których lubisz chodzić." />
+					<a id="recommend_submit" href="#" class="primary" rel="pubs_form">
+					</a>	
 				</form>
 				
 					

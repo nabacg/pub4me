@@ -29,62 +29,42 @@ ol, ul {
 
 body {
 	font-family: Arial,Helvetica,Helvetica Neue,Verdana,sans-serif;
-}
-
-.right {
-	float: right;
+	background: #a4fbee;
 }
 
 .container {
-	margin: 0 auto;
-	width: 960px;
 }
 
-h1 {
-	font-size: 28pt;
-  line-height: 1.2;
-  margin-bottom: 10px;
+.header {
+	background: #06666c;
+	height: 25px;
+	border-bottom: 1px solid #45a2a0;
+	margin-bottom: 25px;
 }
 
-.addformlink {
-	clear: both;
-	float: left;
+.content {
+	width: 495px;
+	margin: auto auto;
 }
 
-.removeformlink {
-	display: none;
+.logo {
+	margin-bottom: 50px;
 }
 
-.notify {
-	display: none;
-	clear: left;
-	float: left;
+.hint {
+	margin-bottom: 20px;
 }
 
 .primary {
-	width: 200px;
 	display: block;
-	padding: 10px 20px;
+	background: url(/site_media/szukaj.png) no-repeat 10px 10px;
+	width: 118px;
+	height: 42px;
+	padding: 10px;
+	margin: 20px auto;
 }
 
-
-p {
-	margin-bottom: 1em;
-}
-
-input {
-		font-size: 1.2em;
-    line-height: 1.5;
-    padding: 0.2em 0.4em;
-    font-size: inherit;
-}
-
-input.placename {
-		clear: both;
-		float: left;
-    display: block;
-    padding: 0.4em 0.4em;
-    margin-right: 10px;
-    width: 350px;
-		margin-bottom: 10px;
+.placeholder
+{
+  color: #aaa;
 }
