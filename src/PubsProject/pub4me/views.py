@@ -77,10 +77,12 @@ def save_user_action(request, pub, action_type):
         pub_id = int(pub)
         action.pub = get_object_or_404(Pub, pk=pub_id)
     except:
-        action.pub = get_object_or_404(Pub, name=pub)
-
+        matching_pubs = Pub.objects.filter(name = pub).filter(active=True)
+        if matching_pubs:
+            action.pub = matching_pubs[0]
         
     if action.pub:    
+        action.pub
         action.user = request.user.pubuser_set.all()[0]
         action.ip = request.META['REMOTE_ADDR']
         action.time = time.ctime()
