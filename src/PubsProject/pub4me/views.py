@@ -72,7 +72,9 @@ def save_user_action(request, pub, action_type):
         action = UserAction_LikedPub()
     else: 
         action = UserAction_GotSuggestion()
-        
+    
+    matching_pub = None
+    
     try:
         pub_id = int(pub)
         matching_pub = get_object_or_404(Pub, pk=pub_id)
