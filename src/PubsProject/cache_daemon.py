@@ -22,8 +22,8 @@ def main(argv=None):
         argv = sys.argv
 
     recommendations.refresh_cache()
-    log = open("log.txt", "a")
-    log.write("run on: %s \n" % str(datetime.datetime.today()))
+
+    print "run on: %s \n" % str(datetime.datetime.today())
 
 if __name__ == '__main__':
     main()
