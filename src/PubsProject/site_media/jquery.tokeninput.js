@@ -21,9 +21,10 @@ var DEFAULT_SETTINGS = {
     jsonContainer: null,
 
 	// Display settings
-    hintText: "Type in a place name",
-    noResultsText: "No results. Add this as a new place?",
-    searchingText: "Searching...",
+    hintText: "Wpisz nazwę miejsca",
+    noResultsText: "Nie mamy takiego. Kliknij tutaj, żeby dodać ",
+    searchingText: "Szukam...",
+    infoText: "(nowe!)",
     deleteText: "&times;",
     animateDropdown: true,
 
@@ -58,6 +59,7 @@ var DEFAULT_CLASSES = {
     tokenList: "token-input-list",
     token: "token-input-token",
     tokenDelete: "token-input-delete-token",
+    tokenInfo: "token-info",
     selectedToken: "token-input-selected-token",
     highlightedToken: "token-input-highlighted-token",
     dropdown: "token-input-dropdown",
@@ -453,6 +455,11 @@ $.TokenList = function (input, url_or_data, settings) {
           .addClass(settings.classes.token)
           .insertBefore(input_token);
 
+		 // The 'info' span 
+         $("<span> " + settings.infoText + "</span>")
+            .addClass(settings.classes.tokenInfo)
+            .appendTo(this_token);
+		
         // The 'delete token' button
         $("<span>" + settings.deleteText + "</span>")
             .addClass(settings.classes.tokenDelete)
@@ -728,9 +735,9 @@ $.TokenList = function (input, url_or_data, settings) {
         } else {        	
         	var notHandledYet = true;
             if(settings.noResultsText) {          	
-                dropdown.html('<p>'+settings.noResultsText+'</p>')
+                dropdown.html('<p class="no-results">'+settings.noResultsText+' "'+query+'"</p>')
                 .mouseover(function (event) {
-                	                  
+             		       	                  
                 })
                 .mousedown(function (event) {
                 	if(notHandledYet)
