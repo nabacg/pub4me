@@ -22,7 +22,7 @@ var DEFAULT_SETTINGS = {
 
 	// Display settings
     hintText: "Wpisz nazwę miejsca",
-    noResultsText: "Nie mamy takiego. Kliknij tutaj, żeby dodać.",
+    noResultsText: "Nie mamy takiego. Kliknij tutaj, żeby dodać ",
     searchingText: "Szukam...",
     infoText: "(nowe!)",
     deleteText: "&times;",
@@ -735,9 +735,9 @@ $.TokenList = function (input, url_or_data, settings) {
         } else {        	
         	var notHandledYet = true;
             if(settings.noResultsText) {          	
-                dropdown.html('<p>'+settings.noResultsText+'</p>')
+                dropdown.html('<p class="no-results">'+settings.noResultsText+' "'+query+'"</p>')
                 .mouseover(function (event) {
-                	                  
+             		       	                  
                 })
                 .mousedown(function (event) {
                 	if(notHandledYet)

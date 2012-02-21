@@ -160,4 +160,8 @@ div.token-input-dropdown-facebook ul li.token-input-selected-dropdown-item-faceb
     font-size: 12px;
 }
 
-
+div.token-input-dropdown-facebook p.no-results {
+	background-color: #0cab93;
+	color: #fff;
+	cursor: pointer;
+}
