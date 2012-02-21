@@ -10,6 +10,7 @@
   		<link rel="stylesheet" type="text/css" href="/site_media/main.css"/>
   		<script type="text/javascript" src="/site_media/jquery.tokeninput.js"></script>
 		<link rel="stylesheet" type="text/css" href="/site_media/token-input.css" />
+		<link rel="stylesheet" type="text/css" href="/site_media/token-input-facebook.css" />
 		
 		<script type="text/javascript">
   			var _gaq = _gaq || [];
@@ -29,6 +30,7 @@
 			$(document).ready(function () {
 								
 			    $("#pubs_input").tokenInput("/pub_autocomplete", {
+			    	theme: "facebook",
 			    	preventDuplicates: true,
 			    	onAdd: function (item) {
 						$.ajax({
