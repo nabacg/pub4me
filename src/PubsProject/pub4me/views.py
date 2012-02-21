@@ -67,20 +67,32 @@ def pub_selected(request):
 # to nie jest view,metoda pomocnicza
 # przeniesc gdzei indziej
 
-def save_user_action(request, pub_id, action_type):
+def save_user_action(request, pub, action_type):
     if action_type == 'LP':
         action = UserAction_LikedPub()
     else: 
         action = UserAction_GotSuggestion()
-    action.pub = get_object_or_404(Pub, pk=pub_id)
-    action.user = request.user.pubuser_set.all()[0]
-    action.ip = request.META['REMOTE_ADDR']
-    action.time = time.ctime()
-    action.browser_info = request.META['REMOTE_ADDR']
-    action.referer = request.path
-    action.languages = request.META['HTTP_ACCEPT_LANGUAGE']
-    action.action_type = action_type
-    action.save()
+    
+    matching_pub = None
+    
+    try:
+        pub_id = int(pub)
+        matching_pub = get_object_or_404(Pub, pk=pub_id)
+    except:
+        matching_pubs = Pub.objects.filter(name = pub).filter(active=True)
+        if matching_pubs:
+            matching_pub = matching_pubs[0]
+        
+    if matching_pub:    
+        action.pub = matching_pub
+        action.user = request.user.pubuser_set.all()[0]
+        action.ip = request.META['REMOTE_ADDR']
+        action.time = time.ctime()
+        action.browser_info = request.META['REMOTE_ADDR']
+        action.referer = request.path
+        action.languages = request.META['HTTP_ACCEPT_LANGUAGE']
+        action.action_type = action_type
+        action.save()
     
 def pub_autocomplete(request):
     if request.method == 'GET':

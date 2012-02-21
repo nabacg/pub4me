@@ -30,7 +30,11 @@
 			$(document).ready(function () {
 								
 			    $("#pubs_input").tokenInput("/pub_autocomplete", {
+<<<<<<< HEAD
 			    	theme: "facebook",
+=======
+			    	preventDuplicates: true,
+>>>>>>> 058444e7b3122a39eecb2cbd85e30eadfa736f08
 			    	onAdd: function (item) {
 						$.ajax({
 							type: "POST",
