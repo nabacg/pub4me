@@ -16,6 +16,7 @@ import time
 from django.utils import simplejson as json
 from django.shortcuts import get_object_or_404
 from pub4me import recommendations
+from django.core.cache import cache
 
 def index(request):
     if not request.user.is_authenticated():
@@ -44,20 +45,45 @@ def pub_create(request):
 # wymusza odswiezenie cache, do wywolywania recznego przez HTTP
 def refresh_cache(request):
     return HttpResponse(json.dumps(recommendations.refresh_cache()))
+
+def generate_recommendation(pubs):
+    data =  map(lambda p: int(p), pubs.split(','))  
     
+    selected_pubs = {}     
+    for pub_id in data:
+        pub = Pub.objects.get(pk= pub_id)
+        if pub:
+            selected_pubs[pub.name] = 1            
+    
+    #return  recommendations.get_top_matches(selected_pubs)
+    return json.dumps(map(lambda p: p[1], recommendations.get_top_matches(selected_pubs)))
+       
 def pub_recommend(request):
-    selected_pubs = {}
     if request.method == "POST":
-        data =  map(lambda p: int(p), request.POST['pubs'].split(','))
-        for pub_id in data:
-            pub = Pub.objects.get(pk= pub_id)
-            if pub:
-                selected_pubs[pub.name] = 1
-    topPubs = recommendations.get_top_matches(selected_pubs)
+        pubs = request.POST['pubs']
+        if not pubs:
+            return HttpResponse(json.dumps([]))
+        cached_result = cache.get(pubs, None)
+  
+        if cached_result:
+            #this below should be saved in queuetable and then processed in background
+            #save_recommendation(request, cached_result)
+            #return HttpResponse(json.dumps(map(lambda p: p[1], cached_result)))
+            return HttpResponse(cached_result)
+        
+        topPubs = generate_recommendation(request.POST['pubs']) 
+        #this below should be saved in queuetable and then processed in background
+        #save_recommendation(request, topPubs)
+        cache.set(pubs, topPubs)   
+        #return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
+        return HttpResponse(topPubs)
+    else:
+        return HttpResponse()
+    
+def save_recommendation(request, topPubs):
     for ranking, pub in topPubs:
         pub_id = Pub.objects.filter(active = True).get(name = pub).id
-        save_user_action(request, pub_id , 'GS')       
-    return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
+        save_user_action(request, pub_id , 'GS') 
     
 def pub_selected(request):
     pub_id = request.REQUEST['pub[id]']
