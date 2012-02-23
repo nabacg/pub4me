@@ -66,13 +66,13 @@ def pub_recommend(request):
         cached_result = cache.get(pubs, None)
   
         if cached_result:
-            #this below should be saved in queuetable and then processed in background
+            #this below should be saved in queue table and then processed in background
             #save_recommendation(request, cached_result)
             #return HttpResponse(json.dumps(map(lambda p: p[1], cached_result)))
             return HttpResponse(cached_result)
         
         topPubs = generate_recommendation(request.POST['pubs']) 
-        #this below should be saved in queuetable and then processed in background
+        #this below should be saved in queue table and then processed in background
         #save_recommendation(request, topPubs)
         cache.set(pubs, topPubs)   
         #return HttpResponse(json.dumps(map(lambda p: p[1], topPubs)))
