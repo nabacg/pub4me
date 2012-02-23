@@ -72,6 +72,7 @@ def pub_recommend(request):
             return HttpResponse(cached_result)
         
         topPubs = generate_recommendation(request.POST['pubs']) 
+        
         #this below should be saved in queue table and then processed in background
         #save_recommendation(request, topPubs)
         cache.set(pubs, topPubs)   
