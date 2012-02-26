@@ -92,7 +92,7 @@ def pub_selected(request):
     return HttpResponse(json.dumps({"success": True}))
 
 # to nie jest view,metoda pomocnicza
-# przeniesc gdzei indziej
+# przeniesc gdzie indziej
 
 def save_user_action(request, pub, action_type):
     if action_type == 'LP':
