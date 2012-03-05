@@ -40,6 +40,7 @@ body {
 	height: 25px;
 	border-bottom: 1px solid #45a2a0;
 	margin-bottom: 25px;
+	z-index: 10;
 }
 
 .links {
@@ -61,6 +62,8 @@ body {
 .content {
 	width: 495px;
 	margin: auto auto;
+	position: relative;
+	z-index: 1;
 }
 
 .logo {
@@ -84,3 +87,49 @@ body {
 {
   color: #aaa;
 }
+
+.results {
+	overflow:hidden;
+	position: absolute;
+	top: 50px;
+	width: 100%;
+	display: none;
+}
+
+.circle {
+	margin: auto;
+	display: block;
+	width: 360px;
+	height: 360px;
+	-moz-border-radius: 180px;
+	-webkit-border-radius: 180px;
+	overflow: hidden;
+}
+
+.recommended-places {
+	width: 1800px;
+	height: 360px;
+}
+
+.recommended-places li {
+	float: left;
+	display: block;
+	width: 360px;
+	height: 360px;
+	background-color: #06666c;
+}
+
+.recommended-places li span {
+	color: #fff;
+	display: block;
+	width: 300px;
+	padding: 0 30px;
+	text-align: center;
+	font-size: 36px;
+	font-weight: bolder;
+	margin-top: 30%;
+}
+
+
+
+

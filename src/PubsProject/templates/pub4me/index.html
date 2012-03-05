@@ -11,6 +11,8 @@
   		<script type="text/javascript" src="/site_media/jquery.tokeninput.js"></script>
 		<link rel="stylesheet" type="text/css" href="/site_media/token-input.css" />
 		<link rel="stylesheet" type="text/css" href="/site_media/token-input-facebook.css" />
+		<script type="text/javascript" src="https://raw.github.com/zachstronaut/jquery-animate-css-rotate-scale/master/jquery-animate-css-rotate-scale.js"></script>
+		<script type="text/javascript" src="https://raw.github.com/zachstronaut/jquery-css-transform/master/jquery-css-transform.js"></script>
 		
 		<script type="text/javascript">
   			var _gaq = _gaq || [];
@@ -53,6 +55,10 @@
 			    
 			    $("#pubs_form").submit(function(){
 					var recommendList = $("#recommendList");
+					$(".content").animate({
+									top: '+=535px',
+									rotate: '-=5deg'									
+								}, 500, 'easeInCubic');
 					
 					$.ajax({
 						type: "POST",
@@ -65,9 +71,13 @@
 							recommendList.empty();
 							var data = eval('(' + data + ')');
 							for(var i = 0; i < data.length; i++)
-							{
-								var pub = $('<li></li>').text(data[i]);
+							{	
+								var pub = $('<li></li>');
+								var name = $('<span></span>').text(data[i]);
+								name.appendTo(pub);
 								pub.appendTo(recommendList);
+								$('.results').fadeIn(2000,'easeInCubic');
+								
 							}				
 						}
 					});
@@ -109,10 +119,14 @@
 				
 				{% endblock %}							
 			</div>
-			<div>
-				<ul id="recommendList">
-					
+			<div class="results">
+				<div class="circle">
+				<ul class="recommended-places" id="recommendList">
+					<li><span>Pierwszy Lokal na Stolarskiej po prawej idąc od Małego Rynku</span></li>
+						
 				</ul>
+				</div>
+
 			</div>
 														
 			<div class="footer">
