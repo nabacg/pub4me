@@ -139,7 +139,7 @@ body {
 	background-color: #06666c;
 }
 
-.recommended-places li span {
+.recommended-places li span.place-name {
 	color: #fff;
 	display: block;
 	width: 300px;
@@ -147,8 +147,30 @@ body {
 	text-align: center;
 	font-size: 36px;
 	font-weight: bolder;
-	margin-top: 30%;
+	margin: 30% auto 0 auto;
 }
+
+.recommended-places li .location {
+	font-size: 12px;
+	display: block;
+	color: #a4fbee;
+	width: 300px;
+	padding: 10px;
+	text-align: center;
+	margin: 50px auto;
+}
+
+.location::before  {
+	content: url("/site_media/marker.png");
+	margin-right: 8px;
+	top: 2px;
+	position:relative;
+}
+
+a {
+	text-decoration: none;
+}
+
 
 
 

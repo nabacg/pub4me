@@ -73,8 +73,11 @@
 							for(var i = 0; i < data.length; i++)
 							{	
 								var pub = $('<li></li>');
-								var name = $('<span></span>').text(data[i]);
+								var name = $('<span class="place-name"></span>').text(data[i]);
+								var location = $('<a class="location" target="_blank" href="http://maps.google.pl/maps?hl=pl&q='+data[i]+'+kraków">zobacz na mapie</a>')
+								
 								name.appendTo(pub);
+								location.appendTo(pub);
 								pub.appendTo(recommendList);
 								$('.results').fadeIn(2000,'easeInCubic');
 								
