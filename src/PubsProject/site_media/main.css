@@ -74,6 +74,10 @@ body {
 	margin-bottom: 20px;
 }
 
+.copy {
+	
+}
+
 .primary {
 	display: block;
 	background: url(/site_media/szukaj.png) no-repeat 10px 10px;
@@ -91,9 +95,25 @@ body {
 .results {
 	overflow:hidden;
 	position: absolute;
-	top: 50px;
+	top: 25px;
 	width: 100%;
 	display: none;
+}
+
+.results h2 {
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 40px;
+}
+
+#next {
+	display: block;
+	width: 250px;
+	margin:auto;
+}
+
+#next img {
+	padding: 20px;
 }
 
 .circle {

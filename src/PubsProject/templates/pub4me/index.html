@@ -83,6 +83,13 @@
 					});
 					return false;
 				});
+				
+				$("#next").click(function(){
+					$("ul.recommended-places").animate({
+						marginLeft: "-=360px"
+					}, 500, 'easeInCubic');
+					return false;
+				});
 			});
 			
 		</script>
@@ -120,12 +127,13 @@
 				{% endblock %}							
 			</div>
 			<div class="results">
+				<h2 class="copy"><img src="/site_media/results-copy.png" alt="twoje nowe ulubione miejsce" /></h2>
+				
 				<div class="circle">
-				<ul class="recommended-places" id="recommendList">
-					<li><span>Pierwszy Lokal na Stolarskiej po prawej idąc od Małego Rynku</span></li>
-						
-				</ul>
+					<ul class="recommended-places" id="recommendList">					
+					</ul>
 				</div>
+				<a id="next" href="#"><img src="/site_media/next.png" alt="Dawaj następną" /></a>
 
 			</div>
 														
