@@ -51,8 +51,9 @@ def generate_recommendation(pubs):
     
     selected_pubs = {}     
     for pub_id in data:
-        pub = Pub.objects.get(pk= pub_id)
+        pub = Pub.objects.filter(pk= pub_id)
         if pub:
+            pub = pub[0]
             selected_pubs[pub.name] = 1            
     
     #return  recommendations.get_top_matches(selected_pubs)
