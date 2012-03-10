@@ -740,7 +740,7 @@ $.TokenList = function (input, url_or_data, settings) {
              		       	                  
                 })
                 .mousedown(function (event) {
-                	if(notHandledYet)
+                    if(notHandledYet && input_box.val() == query)
                 	{
 	                	var item = {
 	                		id: query,
@@ -850,6 +850,7 @@ $.TokenList = function (input, url_or_data, settings) {
                   if($.isFunction(settings.onResult)) {
                       results = settings.onResult.call(hidden_input, results);
                   }
+//		  if(results && results.length > 0)
                   cache.add(cache_key, settings.jsonContainer ? results[settings.jsonContainer] : results);
 
                   // only populate the dropdown if the results are associated with the active search query
