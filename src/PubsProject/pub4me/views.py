@@ -47,7 +47,7 @@ def refresh_cache(request):
     return HttpResponse(json.dumps(recommendations.refresh_cache()))
 
 def generate_recommendation(pubs):
-    data =  map(lambda p: int(p), pubs.split(','))  
+    data =  map(lambda p: int(p), filter(lambda p: p.isdigit(), pubs.split(',')))
     
     selected_pubs = {}     
     for pub_id in data:
