@@ -740,7 +740,7 @@ $.TokenList = function (input, url_or_data, settings) {
              		       	                  
                 })
                 .mousedown(function (event) {
-                    if(notHandledYet && input_box.val() == query)
+                    if(notHandledYet && input_box.val().toLowerCase() == query)
                 	{
 	                	var item = {
 	                		id: query,
