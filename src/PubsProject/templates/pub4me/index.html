@@ -56,10 +56,13 @@
 			    $("#pubs_form").submit(function(){
 			    	i = 0;
 					var recommendList = $("#recommendList");
-					$(".content").animate({
+					if ($(".content").css("top") != "555px") {
+						$(".content").animate({
 									top: '+=555px',
 									rotate: '-=5deg'									
 								}, 500, 'easeInCubic');
+					}
+					
 					
 					$.ajax({
 						type: "POST",
