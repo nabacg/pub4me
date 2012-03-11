@@ -106,7 +106,7 @@ body {
 	margin-bottom: 40px;
 }
 
-#next {
+#next, #again {
 	display: block;
 	width: 250px;
 	margin:auto;
@@ -114,6 +114,10 @@ body {
 
 #next img {
 	padding: 20px;
+}
+
+#again img {
+	padding: 0 20px;
 }
 
 .circle {

@@ -56,7 +56,7 @@
 			    $("#pubs_form").submit(function(){
 					var recommendList = $("#recommendList");
 					$(".content").animate({
-									top: '+=535px',
+									top: '+=555px',
 									rotate: '-=5deg'									
 								}, 500, 'easeInCubic');
 					
@@ -91,6 +91,16 @@
 					$("ul.recommended-places").animate({
 						marginLeft: "-=360px"
 					}, 500, 'easeInCubic');
+					return false;
+				});
+				
+				$("#again").click(function(){
+					$('.results').fadeOut(200,'easeInCubic');
+					$(".content").animate({
+									top: '-=555px',
+									rotate: '+=5deg'									
+								}, 500, 'easeInCubic');
+					
 					return false;
 				});
 			});
@@ -137,6 +147,7 @@
 					</ul>
 				</div>
 				<a id="next" href="#"><img src="/site_media/next.png" alt="Dawaj następną" /></a>
+				<a id="again" href="#"><img src="/site_media/again.png" alt="Spróbuj jeszcze raz" /></a>
 
 			</div>
 														
