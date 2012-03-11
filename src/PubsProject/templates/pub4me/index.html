@@ -54,6 +54,7 @@
 				});
 			    
 			    $("#pubs_form").submit(function(){
+			    	i = 0;
 					var recommendList = $("#recommendList");
 					$(".content").animate({
 									top: '+=555px',
@@ -86,23 +87,32 @@
 					});
 					return false;
 				});
+				var i = 0;
 				
 				$("#next").click(function(){
-					$("ul.recommended-places").animate({
-						marginLeft: "-=360px"
-					}, 500, 'easeInCubic');
+					if (i==4) {
+						formReturns();
+					} else {
+						i++;
+						$("ul.recommended-places").animate({
+							marginLeft: "-=360px"
+						}, 500, 'easeInCubic');						
+					}					
 					return false;
 				});
 				
 				$("#again").click(function(){
+					formReturns();					
+					return false;
+				});
+				
+				var formReturns = function() {
 					$('.results').fadeOut(200,'easeInCubic');
 					$(".content").animate({
 									top: '-=555px',
 									rotate: '+=5deg'									
 								}, 500, 'easeInCubic');
-					
-					return false;
-				});
+				}
 			});
 			
 		</script>
