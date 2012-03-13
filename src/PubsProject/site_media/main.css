@@ -74,6 +74,23 @@ body {
 	margin-bottom: 20px;
 }
 
+.current-city {
+	top: 140px;
+	left: 320px;
+	position: absolute;
+	background-color:#06666c;
+	margin: auto;
+	display: block;
+	width: 120px;
+	height: 75px;
+	-moz-border-radius: 60px;
+	-webkit-border-radius: 60px;
+	text-align: center;
+	color: white;
+	font-size: 20pt;
+	padding-top: 45px;
+}
+
 .copy {
 	
 }
