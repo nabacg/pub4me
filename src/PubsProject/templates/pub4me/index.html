@@ -114,7 +114,9 @@
 					$(".content").animate({
 									top: '-=555px',
 									rotate: '+=5deg'									
-								}, 500, 'easeInCubic');
+								}, 500, 'easeInCubic', function() {
+   									$("ul.recommended-places").css("margin-left", "0px");
+  								});
 				}
 			});
 			
