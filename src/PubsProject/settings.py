@@ -82,7 +82,7 @@ AUTH_PROFILE_MODULE = 'pub4me.PubUser'
 DEFAULT_CITY_ID = 'CRACOW'
 DEFAULT_EXT_SERVICE_ID = -11
 
-CACHE_BACKEND = 'locmem://?timeout=6"'
+CACHE_BACKEND = 'locmem://?timeout=1200'
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
